@@ -9,18 +9,19 @@ import ImageCard from '@/components/ImageCard';
 import ImageModal from '@/components/ImageModal';
 import BrandGuidelinesCarousel from '@/components/BrandGuidelinesCarousel';
 import PinterestImageCard from '@/components/PinterestImageCard';
+// Removed unused ThemeSelector import to fix build error
 
-// --- Type Definitions ---
+// --- Type Definitions (Crucial for Build) ---
+
 interface ImageAsset {
     src: string;
     alt: string;
     title: string;
-    description?: string;
+    description: string;
     embedUrl?: string;
-    isVideo?: boolean;
 }
 
-interface SonicLabsImages {
+interface SonicLabsData {
     howItStarted: ImageAsset[];
     website: ImageAsset[];
     brandGuidelines: ImageAsset[];
@@ -62,7 +63,7 @@ const SimpleThemeSelector = ({ currentTheme, setTheme, isDark, toggleDarkMode }:
 
 // --- Helper Functions ---
 
-const getSonicLabsImages = (): SonicLabsImages => {
+const getSonicLabsImages = (): SonicLabsData => {
     const howItStarted = [
         {
             src: '/media/sonic-labs/how-it-started/sonic-initial-sketch-01.jpg',
@@ -275,7 +276,7 @@ const getSonicLabsImages = (): SonicLabsImages => {
     };
 };
 
-const getExperienceImages = (slug: string): SonicLabsImages | null => {
+const getExperienceImages = (slug: string): SonicLabsData | null => {
     switch (slug) {
         case 'sonic-labs':
             return getSonicLabsImages();
@@ -328,7 +329,6 @@ const getExperienceFeatures = (slug: string) => {
 
 const getFallbackImages = (slug: string) => {
     const images = [];
-    // Generate 6 placeholder images
     for (let i = 1; i <= 6; i++) {
         images.push({
             src: `/api/placeholder/800/600?text=${slug}+image+${i}`,
@@ -340,11 +340,11 @@ const getFallbackImages = (slug: string) => {
     return images;
 };
 
-// Main Component - Now accepts slug as a prop
+// --- Main Component ---
+
 export default function ExperienceView({ slug }: { slug: string }) {
     const router = useRouter();
     
-    // Theme state
     const [activeTheme, setActiveTheme] = useState(0);
     const [isDark, setIsDark] = useState(true);
 
@@ -359,14 +359,12 @@ export default function ExperienceView({ slug }: { slug: string }) {
     const features = getExperienceFeatures(slug);
     const fallbackImages = getFallbackImages(slug);
 
-    // Update CSS variables for the theme
     useEffect(() => {
         const root = document.documentElement;
         root.style.setProperty('--theme-rgb', theme.rgb);
         root.style.setProperty('--theme-hex', theme.hex);
 
         return () => {
-            // Cleanup styles when component unmounts
             root.style.removeProperty('--theme-rgb');
             root.style.removeProperty('--theme-hex');
         };
@@ -441,8 +439,8 @@ export default function ExperienceView({ slug }: { slug: string }) {
                 {images ? (
                     <div className="space-y-16 sm:space-y-32">
                         {features.map((feature, index) => {
-                            // Safe access using keyof
-                            const sectionKey = feature.key as keyof SonicLabsImages;
+                            // Use the interface for safe key access
+                            const sectionKey = feature.key as keyof SonicLabsData;
                             const sectionImages = images[sectionKey];
 
                             if (!sectionImages || sectionImages.length === 0) return null;

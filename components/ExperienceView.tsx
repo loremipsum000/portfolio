@@ -2,15 +2,18 @@
 
 import { useRouter } from 'next/navigation';
 import { ArrowLeft, Calendar, Building2 } from 'lucide-react';
-import { EXPERIENCE, THEME_RGB_VALUES } from '@/lib/constants';
+import { EXPERIENCE } from '@/lib/constants';
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import ImageCard from '@/components/ImageCard';
 import ImageModal from '@/components/ImageModal';
 import BrandGuidelinesCarousel from '@/components/BrandGuidelinesCarousel';
 import PinterestImageCard from '@/components/PinterestImageCard';
+import ThemeSelector from '@/components/ThemeSelector'; // <--- ADDED MISSING IMPORT
 
-// Helper function to get images for sonic-labs
+// --- Helper Functions ---
+
 const getSonicLabsImages = () => {
     const howItStarted = [
         {
@@ -277,7 +280,6 @@ const getExperienceFeatures = (slug: string) => {
 
 const getFallbackImages = (slug: string) => {
     const images = [];
-    // Generate 6 placeholder images
     for (let i = 1; i <= 6; i++) {
         images.push({
             src: `/api/placeholder/800/600?text=${slug}+image+${i}`,
@@ -289,13 +291,14 @@ const getFallbackImages = (slug: string) => {
     return images;
 };
 
-// Main Component - Now accepts slug as a prop
+// --- Main Component ---
+
 export default function ExperienceView({ slug }: { slug: string }) {
     const router = useRouter();
     
-    // Theme state
-    const [activeTheme] = useState(0);
-    const [isDark] = useState(true);
+    // UPDATED: Added state setters so the ThemeSelector can work
+    const [activeTheme, setActiveTheme] = useState(0);
+    const [isDark, setIsDark] = useState(true);
 
     // Modal state
     const [modalOpen, setModalOpen] = useState(false);
@@ -308,14 +311,12 @@ export default function ExperienceView({ slug }: { slug: string }) {
     const features = getExperienceFeatures(slug);
     const fallbackImages = getFallbackImages(slug);
 
-    // Update CSS variables for the theme
     useEffect(() => {
         const root = document.documentElement;
         root.style.setProperty('--theme-rgb', theme.rgb);
         root.style.setProperty('--theme-hex', theme.hex);
 
         return () => {
-            // Cleanup styles when component unmounts
             root.style.removeProperty('--theme-rgb');
             root.style.removeProperty('--theme-hex');
         };
@@ -338,7 +339,7 @@ export default function ExperienceView({ slug }: { slug: string }) {
     return (
         <div className={`min-h-screen ${isDark ? 'dark' : ''} bg-[var(--background)] text-[var(--text-primary)] transition-colors duration-500`}>
             {/* Header */}
-            <header className="fixed top-0 left-0 right-0 z-50 bg-[var(--background)]/80 backdrop-blur-md border-b border-[var(--border)]">
+            <header className="fixed top-0 left-0 right-0 z-50 bg-[var(--background)]/80 backdrop-blur-md border-b border-[var(--border-color)]">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between">
                     <button
                         onClick={() => router.push('/')}
@@ -348,7 +349,13 @@ export default function ExperienceView({ slug }: { slug: string }) {
                     </button>
                     
                     <div className="flex items-center gap-4">
-                        <ThemeSelector activeTheme={activeTheme} onThemeChange={() => {}} />
+                        {/* UPDATED: Corrected props to match ThemeSelector definition */}
+                        <ThemeSelector 
+                            currentTheme={activeTheme} 
+                            setTheme={setActiveTheme} 
+                            isDark={isDark} 
+                            toggleDarkMode={() => setIsDark(!isDark)} 
+                        />
                     </div>
                 </div>
             </header>
@@ -404,7 +411,6 @@ export default function ExperienceView({ slug }: { slug: string }) {
                                     {feature.key === 'brandGuidelines' ? (
                                         <BrandGuidelinesCarousel
                                             images={sectionImages}
-                                            onImageClick={(idx) => openModal(sectionImages, idx)}
                                         />
                                     ) : feature.key === 'howItStarted' ? (
                                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">

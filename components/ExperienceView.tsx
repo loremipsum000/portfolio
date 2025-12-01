@@ -10,6 +10,26 @@ import ImageModal from '@/components/ImageModal';
 import BrandGuidelinesCarousel from '@/components/BrandGuidelinesCarousel';
 import PinterestImageCard from '@/components/PinterestImageCard';
 
+// --- Type Definitions ---
+interface ImageAsset {
+    src: string;
+    alt: string;
+    title: string;
+    description?: string;
+    embedUrl?: string;
+    isVideo?: boolean;
+}
+
+interface SonicLabsImages {
+    howItStarted: ImageAsset[];
+    website: ImageAsset[];
+    brandGuidelines: ImageAsset[];
+    brand: ImageAsset[];
+    feem: ImageAsset[];
+    mySonic: ImageAsset[];
+    spawn: ImageAsset[];
+}
+
 // --- Embedded Theme Selector (Fail-Safe) ---
 const SimpleThemeSelector = ({ currentTheme, setTheme, isDark, toggleDarkMode }: any) => {
     return (
@@ -42,7 +62,7 @@ const SimpleThemeSelector = ({ currentTheme, setTheme, isDark, toggleDarkMode }:
 
 // --- Helper Functions ---
 
-const getSonicLabsImages = () => {
+const getSonicLabsImages = (): SonicLabsImages => {
     const howItStarted = [
         {
             src: '/media/sonic-labs/how-it-started/sonic-initial-sketch-01.jpg',
@@ -255,7 +275,7 @@ const getSonicLabsImages = () => {
     };
 };
 
-const getExperienceImages = (slug: string) => {
+const getExperienceImages = (slug: string): SonicLabsImages | null => {
     switch (slug) {
         case 'sonic-labs':
             return getSonicLabsImages();
@@ -330,7 +350,7 @@ export default function ExperienceView({ slug }: { slug: string }) {
 
     // Modal state
     const [modalOpen, setModalOpen] = useState(false);
-    const [modalImages, setModalImages] = useState<Array<{ src: string; alt: string; title: string; description: string; embedUrl?: string }>>([]);
+    const [modalImages, setModalImages] = useState<Array<{ src: string; alt: string; title: string; description?: string; embedUrl?: string; isVideo?: boolean }>>([]);
     const [modalIndex, setModalIndex] = useState(0);
 
     const experience = EXPERIENCE.find(exp => exp.slug === slug);
@@ -421,7 +441,10 @@ export default function ExperienceView({ slug }: { slug: string }) {
                 {images ? (
                     <div className="space-y-16 sm:space-y-32">
                         {features.map((feature, index) => {
-                            const sectionImages = images[feature.key as keyof typeof images];
+                            // Safe access using keyof
+                            const sectionKey = feature.key as keyof SonicLabsImages;
+                            const sectionImages = images[sectionKey];
+
                             if (!sectionImages || sectionImages.length === 0) return null;
 
                             return (
@@ -440,7 +463,7 @@ export default function ExperienceView({ slug }: { slug: string }) {
                                     {feature.key === 'brandGuidelines' ? (
                                         <BrandGuidelinesCarousel
                                             images={sectionImages}
-                                            onImageClick={(idx) => openModal(sectionImages, idx)}
+                                            onImageClick={(idx: any) => openModal(sectionImages, idx)}
                                         />
                                     ) : feature.key === 'howItStarted' ? (
                                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">

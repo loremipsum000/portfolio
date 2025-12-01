@@ -2,16 +2,17 @@
 
 import { useRouter } from 'next/navigation';
 import { ArrowLeft, Calendar, Building2 } from 'lucide-react';
-import { EXPERIENCE, THEME_RGB_VALUES } from '@/lib/constants';
+import { EXPERIENCE } from '@/lib/constants';
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import ImageCard from '@/components/ImageCard';
 import ImageModal from '@/components/ImageModal';
 import BrandGuidelinesCarousel from '@/components/BrandGuidelinesCarousel';
 import PinterestImageCard from '@/components/PinterestImageCard';
-import ThemeSelector from '@/components/ThemeSelector'; // <--- ADDED MISSING IMPORT
+import ThemeSelector from '@/components/ThemeSelector'; 
 
-// Helper function to get images for sonic-labs
+// --- Helper Functions ---
+
 const getSonicLabsImages = () => {
     const howItStarted = [
         {
@@ -294,7 +295,7 @@ const getFallbackImages = (slug: string) => {
 export default function ExperienceView({ slug }: { slug: string }) {
     const router = useRouter();
     
-    // Theme state - FIXED: Added setters
+    // Theme state
     const [activeTheme, setActiveTheme] = useState(0);
     const [isDark, setIsDark] = useState(true);
 
@@ -349,7 +350,6 @@ export default function ExperienceView({ slug }: { slug: string }) {
                     </button>
                     
                     <div className="flex items-center gap-4">
-                        {/* FIXED: Passed correct props to ThemeSelector */}
                         <ThemeSelector 
                             currentTheme={activeTheme} 
                             setTheme={setActiveTheme} 

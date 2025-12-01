@@ -6,15 +6,17 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface BrandGuidelinesCarouselProps {
     images: Array<{ src: string; alt: string; title: string; description?: string }>;
+    onImageClick?: (index: number) => void;
 }
 
-export default function BrandGuidelinesCarousel({ images }: BrandGuidelinesCarouselProps) {
+export default function BrandGuidelinesCarousel({ images, onImageClick }: BrandGuidelinesCarouselProps) {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isDragging, setIsDragging] = useState(false);
     const [startX, setStartX] = useState(0);
     const [scrollLeft, setScrollLeft] = useState(0);
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const carouselRef = useRef<HTMLDivElement>(null);
+    const hasDragged = useRef(false);
 
     const handlePrevious = () => {
         setCurrentIndex((prev) => (prev > 0 ? prev - 1 : images.length - 1));
@@ -38,6 +40,7 @@ export default function BrandGuidelinesCarousel({ images }: BrandGuidelinesCarou
     const handleMouseDown = (e: React.MouseEvent) => {
         if (!carouselRef.current) return;
         setIsDragging(true);
+        hasDragged.current = false;
         setStartX(e.pageX - carouselRef.current.offsetLeft);
         setScrollLeft(carouselRef.current.scrollLeft);
         e.preventDefault();
@@ -46,6 +49,7 @@ export default function BrandGuidelinesCarousel({ images }: BrandGuidelinesCarou
     const handleMouseMove = (e: React.MouseEvent) => {
         if (!isDragging || !carouselRef.current) return;
         e.preventDefault();
+        hasDragged.current = true;
         const x = e.pageX - carouselRef.current.offsetLeft;
         const walk = (x - startX) * 2;
         carouselRef.current.scrollLeft = scrollLeft - walk;
@@ -140,6 +144,11 @@ export default function BrandGuidelinesCarousel({ images }: BrandGuidelinesCarou
                         key={index}
                         className="flex-shrink-0 w-full relative"
                         style={{ padding: 0, margin: 0, width: '100%', alignSelf: 'flex-start', height: 'auto' }}
+                        onClick={() => {
+                            if (!hasDragged.current && onImageClick) {
+                                onImageClick(index);
+                            }
+                        }}
                     >
                         <div className="relative w-full" style={{ padding: 0, margin: 0, lineHeight: 0, fontSize: 0, display: 'block' }}>
                             <Image

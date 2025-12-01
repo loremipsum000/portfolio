@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://dardanberisha.com'),
   title: 'Dardan Berisha - Portfolio',
   description: 'Senior Product Designer & Multimedia Engineer based in Croatia. Specializing in Blockchain, Design Systems, and Brand Identity.',
   keywords: ['Product Design', 'UX/UI', 'Blockchain', 'Design Systems', 'Brand Identity', 'Frontend Development', 'Next.js', 'React', 'Multimedia Engineer', 'Croatia'],
@@ -11,13 +12,13 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://lorem-portfolio.com',
+    url: 'https://dardanberisha.com',
     title: 'Dardan Berisha - Portfolio',
     description: 'Senior Product Designer & Multimedia Engineer based in Croatia. Specializing in Blockchain, Design Systems, and Brand Identity.',
     siteName: 'Dardan Berisha Portfolio',
     images: [
       {
-        url: '/media/Color-synth-3000-cover.jpg',
+        url: '/media/linkpreview-lorem.jpg',
         width: 1200,
         height: 630,
         alt: 'Dardan Berisha Portfolio',
@@ -29,7 +30,7 @@ export const metadata: Metadata = {
     title: 'Dardan Berisha - Portfolio',
     description: 'Senior Product Designer & Multimedia Engineer based in Croatia.',
     creator: '@Lorem_Ipsum95',
-    images: ['/media/Color-synth-3000-cover.jpg'],
+    images: ['/media/linkpreview-lorem.jpg'],
   },
   icons: {
     icon: '/Favi-lorem.svg',

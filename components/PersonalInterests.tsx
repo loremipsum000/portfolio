@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { ChevronDown, ChevronUp, Waves, Activity, Circle, Music, Camera } from 'lucide-react';
 import { PERSONAL_INTERESTS } from '@/lib/constants';
 
-const iconMap: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
+const iconMap: Record<string, any> = {
     Waves,
     Activity,
     Circle,

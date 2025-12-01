@@ -2,18 +2,16 @@
 
 import { useRouter } from 'next/navigation';
 import { ArrowLeft, Calendar, Building2 } from 'lucide-react';
-import { EXPERIENCE } from '@/lib/constants';
+import { EXPERIENCE, THEME_RGB_VALUES } from '@/lib/constants';
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
-import Image from 'next/image';
 import ImageCard from '@/components/ImageCard';
 import ImageModal from '@/components/ImageModal';
 import BrandGuidelinesCarousel from '@/components/BrandGuidelinesCarousel';
 import PinterestImageCard from '@/components/PinterestImageCard';
 import ThemeSelector from '@/components/ThemeSelector'; // <--- ADDED MISSING IMPORT
 
-// --- Helper Functions ---
-
+// Helper function to get images for sonic-labs
 const getSonicLabsImages = () => {
     const howItStarted = [
         {
@@ -280,6 +278,7 @@ const getExperienceFeatures = (slug: string) => {
 
 const getFallbackImages = (slug: string) => {
     const images = [];
+    // Generate 6 placeholder images
     for (let i = 1; i <= 6; i++) {
         images.push({
             src: `/api/placeholder/800/600?text=${slug}+image+${i}`,
@@ -291,12 +290,11 @@ const getFallbackImages = (slug: string) => {
     return images;
 };
 
-// --- Main Component ---
-
+// Main Component - Now accepts slug as a prop
 export default function ExperienceView({ slug }: { slug: string }) {
     const router = useRouter();
     
-    // UPDATED: Added state setters so the ThemeSelector can work
+    // Theme state - FIXED: Added setters
     const [activeTheme, setActiveTheme] = useState(0);
     const [isDark, setIsDark] = useState(true);
 
@@ -311,12 +309,14 @@ export default function ExperienceView({ slug }: { slug: string }) {
     const features = getExperienceFeatures(slug);
     const fallbackImages = getFallbackImages(slug);
 
+    // Update CSS variables for the theme
     useEffect(() => {
         const root = document.documentElement;
         root.style.setProperty('--theme-rgb', theme.rgb);
         root.style.setProperty('--theme-hex', theme.hex);
 
         return () => {
+            // Cleanup styles when component unmounts
             root.style.removeProperty('--theme-rgb');
             root.style.removeProperty('--theme-hex');
         };
@@ -349,7 +349,7 @@ export default function ExperienceView({ slug }: { slug: string }) {
                     </button>
                     
                     <div className="flex items-center gap-4">
-                        {/* UPDATED: Corrected props to match ThemeSelector definition */}
+                        {/* FIXED: Passed correct props to ThemeSelector */}
                         <ThemeSelector 
                             currentTheme={activeTheme} 
                             setTheme={setActiveTheme} 
@@ -411,6 +411,7 @@ export default function ExperienceView({ slug }: { slug: string }) {
                                     {feature.key === 'brandGuidelines' ? (
                                         <BrandGuidelinesCarousel
                                             images={sectionImages}
+                                            onImageClick={(idx) => openModal(sectionImages, idx)}
                                         />
                                     ) : feature.key === 'howItStarted' ? (
                                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">

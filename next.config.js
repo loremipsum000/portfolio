@@ -1,7 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
-}
+  // Keep your existing setting
+  reactStrictMode: true, 
 
-module.exports = nextConfig
+  // --- Add these lines for Static Export (GitHub Pages) ---
+  output: 'export',
+  images: {
+    // This is crucial for static hosting like GitHub Pages, as it disables
+    // the server-side image optimization
+    unoptimized: true, 
+  },
+  // --------------------------------------------------------
+};
 
+module.exports = nextConfig;

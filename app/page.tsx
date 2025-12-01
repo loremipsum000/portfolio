@@ -26,6 +26,14 @@ export default function Home() {
     const [isDark, setIsDark] = useState(true);
 
     useEffect(() => {
+        // Save theme preference
+        localStorage.setItem('activeTheme', activeTheme.toString());
+    }, [activeTheme]);
+
+    useEffect(() => {
+        // Save dark mode preference
+        localStorage.setItem('isDark', String(isDark));
+
         document.documentElement.style.setProperty(
             '--scrollbar-thumb',
             isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'
@@ -35,6 +43,23 @@ export default function Home() {
             isDark ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.2)'
         );
     }, [isDark]);
+
+    useEffect(() => {
+        // Load preferences on mount
+        const savedThemeIndex = localStorage.getItem('activeTheme');
+        const savedIsDark = localStorage.getItem('isDark');
+
+        if (savedThemeIndex) {
+            const themeIndex = parseInt(savedThemeIndex, 10);
+            if (!isNaN(themeIndex) && THEME_RGB_VALUES[themeIndex]) {
+                setActiveTheme(themeIndex);
+            }
+        }
+
+        if (savedIsDark) {
+            setIsDark(savedIsDark === 'true');
+        }
+    }, []);
 
     return (
         <div 

@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { ArrowLeft, Calendar, Building2, Sun, Moon } from 'lucide-react';
-import { EXPERIENCE, THEMES } from '@/lib/constants';
+import { EXPERIENCE, THEMES, THEME_RGB_VALUES } from '@/lib/constants';
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import ImageCard from '@/components/ImageCard';
@@ -360,9 +360,27 @@ export default function ExperienceView({ slug }: { slug: string }) {
     const fallbackImages = getFallbackImages(slug);
 
     useEffect(() => {
+        const savedThemeIndex = localStorage.getItem('activeTheme');
+        const savedIsDark = localStorage.getItem('isDark');
+
+        if (savedThemeIndex) {
+            const themeIndex = parseInt(savedThemeIndex, 10);
+            if (!isNaN(themeIndex) && THEME_RGB_VALUES[themeIndex]) {
+                setActiveTheme(themeIndex);
+            }
+        }
+
+        if (savedIsDark) {
+            setIsDark(savedIsDark === 'true');
+        }
+    }, []);
+
+    // Update CSS variables when theme changes
+    useEffect(() => {
         const root = document.documentElement;
-        root.style.setProperty('--theme-rgb', theme.rgb);
-        root.style.setProperty('--theme-hex', theme.hex);
+        const currentThemeRgb = THEME_RGB_VALUES[activeTheme];
+        
+        root.style.setProperty('--theme-rgb', currentThemeRgb);
         
         // Set scrollbar colors
         root.style.setProperty(
@@ -375,12 +393,12 @@ export default function ExperienceView({ slug }: { slug: string }) {
         );
 
         return () => {
-            root.style.removeProperty('--theme-rgb');
-            root.style.removeProperty('--theme-hex');
-            root.style.removeProperty('--scrollbar-thumb');
-            root.style.removeProperty('--scrollbar-thumb-hover');
+            // Optional: Don't remove properties if you want them to persist when navigating back
+            // root.style.removeProperty('--theme-rgb');
+            // root.style.removeProperty('--scrollbar-thumb');
+            // root.style.removeProperty('--scrollbar-thumb-hover');
         };
-    }, [theme, isDark]);
+    }, [activeTheme, isDark]);
 
     if (!experience) {
         return (
@@ -428,15 +446,6 @@ export default function ExperienceView({ slug }: { slug: string }) {
                     >
                         <ArrowLeft className="w-5 h-5 sm:w-6 sm:h-6 text-[var(--text-muted)] group-hover:text-[var(--text-main)] transition-colors" />
                     </button>
-                    
-                    <div className="flex items-center gap-4">
-                        <SimpleThemeSelector 
-                            currentTheme={activeTheme} 
-                            setTheme={setActiveTheme} 
-                            isDark={isDark} 
-                            toggleDarkMode={() => setIsDark(!isDark)} 
-                        />
-                    </div>
                 </div>
             </header>
 
@@ -486,8 +495,8 @@ export default function ExperienceView({ slug }: { slug: string }) {
                                     viewport={{ once: true, margin: "-100px" }}
                                     transition={{ duration: 0.7 }}
                                 >
-                                    <h2 className="text-2xl sm:text-3xl font-light mb-6 sm:mb-8 flex items-center gap-3 text-[var(--theme-hex)]">
-                                        <span className="w-8 sm:w-12 h-[1px] bg-[var(--theme-hex)] opacity-50"></span>
+                                    <h2 className="text-2xl sm:text-3xl font-light mb-6 sm:mb-8 flex items-center gap-3 text-[var(--text-main)]">
+                                        <span className="w-8 sm:w-12 h-[1px] bg-[rgb(var(--theme-rgb))] opacity-50"></span>
                                         {feature.title}
                                     </h2>
 

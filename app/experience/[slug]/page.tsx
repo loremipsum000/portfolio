@@ -10,5 +10,6 @@ export async function generateStaticParams() {
 
 // This is a Server Component (no 'use client')
 export default function Page({ params }: { params: { slug: string } }) {
+  // We pass the slug directly to the client component
   return <ExperienceView slug={params.slug} />;
 }

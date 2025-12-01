@@ -192,7 +192,7 @@ const getSonicLabsImages = (): ExperienceData => {
             alt: 'FEEM Prototype',
             title: 'FEEM Protocol',
             description: 'Protocol interface design',
-            embedUrl: 'https://embed.figma.com/proto/7gE4e9iMUE5kRvvulC38Kx/FEEM?page-id=0%3A1&node-id=227-2274&node-type=canvas&viewport=1295%2C573%2C0.1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=227%3A2274&embed-host=share'
+            embedUrl: 'https://embed.figma.com/proto/upcsVVc11ILysX2wI5WzFL/Untitled?page-id=44%3A12260&node-id=44-12261&p=f&viewport=403%2C170%2C0.29&scaling=scale-down&content-scaling=fixed&starting-point-node-id=44%3A12261&embed-host=share'
         },
         {
             src: '/media/sonic-labs/feem/feem11.jpg',
@@ -370,19 +370,6 @@ const getExperienceFeatures = (slug: string): ExperienceFeature[] => {
     }
 };
 
-const getFallbackImages = (slug: string) => {
-    const images = [];
-    for (let i = 1; i <= 6; i++) {
-        images.push({
-            src: `/api/placeholder/800/600?text=${slug}+image+${i}`,
-            alt: `${slug} project image ${i}`,
-            title: `Project Screenshot ${i}`,
-            description: `Visual exploration and design work for ${slug}`
-        });
-    }
-    return images;
-};
-
 // --- Main Component ---
 
 export default function ExperienceView({ slug }: { slug: string }) {
@@ -400,7 +387,6 @@ export default function ExperienceView({ slug }: { slug: string }) {
     const images = getExperienceImages(slug);
     const theme = getExperienceTheme(slug);
     const features = getExperienceFeatures(slug);
-    const fallbackImages = getFallbackImages(slug);
 
     useEffect(() => {
         const savedThemeIndex = localStorage.getItem('activeTheme');
@@ -598,24 +584,18 @@ export default function ExperienceView({ slug }: { slug: string }) {
                         })}
                     </div>
                 ) : (
-                    /* Fallback Grid */
+                    /* Placeholder message for pages without content */
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5, delay: 0.2 }}
-                        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"
+                        className="flex items-center justify-center min-h-[400px]"
                     >
-                        {fallbackImages.map((image, index) => (
-                            <ImageCard
-                                key={index}
-                                src={image.src}
-                                alt={image.alt}
-                                title={image.title}
-                                description={image.description}
-                                onClick={() => openModal(fallbackImages, index)}
-                                aspectRatio="4/3"
-                            />
-                        ))}
+                        <div className="text-center max-w-md px-4">
+                            <p className="text-lg sm:text-xl text-[var(--text-muted)] leading-relaxed">
+                                Sorry, but I'm still working on adding all my work here. Check back soon!
+                            </p>
+                        </div>
                     </motion.div>
                 )}
             </main>

@@ -9,7 +9,8 @@ import {
     Mail, 
     Globe, 
     Twitter, 
-    Github
+    Github,
+    Wrench
 } from 'lucide-react';
 import Image from 'next/image';
 import MouseSpotlight from '@/components/MouseSpotlight';
@@ -18,7 +19,8 @@ import ThemeSelector from '@/components/ThemeSelector';
 import Visualizer from '@/components/Visualizer';
 import PersonalInterests from '@/components/PersonalInterests';
 import BookFavorites from '@/components/BookFavorites';
-import { EXPERIENCE, SKILLS, THEME_RGB_VALUES } from '@/lib/constants';
+import FavoriteMemes from '@/components/FavoriteMemes';
+import { EXPERIENCE, SKILLS, TOOLS, LANGUAGES, THEME_RGB_VALUES } from '@/lib/constants';
 import Link from 'next/link';
 
 export default function Home() {
@@ -286,7 +288,7 @@ export default function Home() {
                         className="col-span-1 sm:col-span-1 md:col-span-2 lg:col-span-2 xl:col-span-4 lg:row-span-1 rounded-2xl sm:rounded-3xl p-5 sm:p-6 flex flex-col bg-[var(--panel-bg)] backdrop-blur-md border border-[var(--border-color)] hover:border-[rgb(var(--theme-rgb))]/50 hover:bg-[rgb(var(--theme-rgb))]/5 transition-all duration-500 min-h-[200px] sm:min-h-[400px] lg:min-h-[280px] xl:min-h-[300px]"
                     >
                         <div className="flex flex-col sm:flex-col sm:justify-between sm:h-full lg:flex-row lg:items-start lg:justify-between gap-4 sm:gap-4 lg:gap-6">
-                            <div className="flex-1">
+                            <div className="flex-1 lg:flex-[3]">
                                 <h3 className="text-sm font-medium text-[var(--text-muted)] mb-4 flex items-center gap-2">
                                     <Zap size={16} className="text-[rgb(var(--theme-rgb))]" />
                                     Skillset
@@ -299,13 +301,44 @@ export default function Home() {
                                     ))}
                                     <span className="text-[11px] font-mono text-[var(--text-muted)] px-2 py-1">+ More</span>
                                 </div>
+                                
+                                {/* Spacer to push Tools down */}
+                                <div className="mb-8"></div>
+                                
+                                {/* Tools Section */}
+                                <div className="bg-[var(--bg-main)]/60 rounded-lg p-4 mb-6 border border-[var(--border-color)]">
+                                    <h4 className="text-xs font-medium text-[var(--text-muted)] mb-3 flex items-center gap-2">
+                                        <Wrench size={14} className="text-[rgb(var(--theme-rgb))]" />
+                                        Tools
+                                    </h4>
+                                    <div className="flex flex-wrap gap-2">
+                                        {TOOLS.map(tool => (
+                                            <span key={tool} className="text-[11px] font-mono text-[var(--text-muted)] bg-[var(--bg-main)]/50 border border-[var(--border-color)] px-2 py-1 rounded hover:bg-[rgb(var(--theme-rgb))]/20 hover:border-[rgb(var(--theme-rgb))]/30 hover:text-[var(--text-main)] cursor-default transition-all duration-300">
+                                                {tool}
+                                            </span>
+                                        ))}
+                                    </div>
+                                </div>
                             </div>
-                            <div className="sm:mt-auto lg:mt-0">
+                            <div className="sm:mt-auto lg:mt-0 lg:flex-shrink-0 lg:w-auto">
                                 <h3 className="text-sm font-medium text-[var(--text-muted)] mb-2">Connect</h3>
-                                <div className="flex gap-2">
+                                <div className="flex gap-2 mb-6">
                                     <a href="https://x.com/Lorem_Ipsum95" target="_blank" rel="noreferrer" className="p-2 bg-[var(--bg-main)]/50 rounded-lg hover:bg-[rgb(var(--theme-rgb))] hover:text-white text-[var(--text-muted)] transition-colors duration-300"><Twitter size={18} /></a>
                                     <a href="https://github.com/loremipsum000" target="_blank" rel="noreferrer" className="p-2 bg-[var(--bg-main)]/50 rounded-lg hover:bg-[rgb(var(--theme-rgb))] hover:text-white text-[var(--text-muted)] transition-colors duration-300"><Github size={18} /></a>
                                     <a href="mailto:hello@lorem-portfolio.com" className="p-2 bg-[var(--bg-main)]/50 rounded-lg hover:bg-[rgb(var(--theme-rgb))] hover:text-white text-[var(--text-muted)] transition-colors duration-300"><Mail size={18} /></a>
+                                </div>
+                                
+                                {/* Languages Section */}
+                                <div>
+                                    <h4 className="text-xs font-medium text-[var(--text-muted)] mb-3">Languages</h4>
+                                    <div className="flex flex-col gap-2">
+                                        {LANGUAGES.map(lang => (
+                                            <span key={lang.name} className="text-[11px] font-mono text-[var(--text-muted)] bg-[var(--bg-main)]/50 border border-[var(--border-color)] px-2 py-1 rounded hover:bg-[rgb(var(--theme-rgb))]/20 hover:border-[rgb(var(--theme-rgb))]/30 hover:text-[var(--text-main)] cursor-default transition-all duration-300 flex items-center gap-1.5 w-fit">
+                                                <span className="text-sm">{lang.flag}</span>
+                                                <span>{lang.name}</span>
+                                            </span>
+                                        ))}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -331,7 +364,17 @@ export default function Home() {
                         <BookFavorites />
                     </motion.div>
 
-                    {/* 9. FOOTER (Full Width) */}
+                    {/* 10. MEMES (Full width) */}
+                    <motion.div 
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: 0.75 }}
+                        className="col-span-1 sm:col-span-2 md:col-span-4 lg:col-span-4 xl:col-span-8 lg:row-span-1 min-h-[250px] sm:min-h-[220px] md:min-h-[220px]"
+                    >
+                        <FavoriteMemes />
+                    </motion.div>
+
+                    {/* 11. FOOTER (Full Width) */}
                     <footer className="col-span-1 sm:col-span-2 md:col-span-3 lg:col-span-4 xl:col-span-8 mt-6 sm:mt-8 border-t border-[var(--border-color)] pt-6 sm:pt-8 pb-4 flex flex-col sm:flex-row justify-between items-center gap-4 text-[var(--text-muted)] text-xs sm:text-sm">
                         <div className="flex items-center gap-2 mb-4 md:mb-0">
                             <span className="w-2 h-2 bg-zinc-500 rounded-full"></span>

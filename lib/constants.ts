@@ -63,6 +63,21 @@ export const SKILLS = [
     "Blockchain", "Decentralized Applications"
 ];
 
+export const TOOLS = [
+    "Adobe Suite",
+    "Figma",
+    "Next.js",
+    "Solidity"
+];
+
+export const LANGUAGES = [
+    { name: "English", flag: "🇬🇧" },
+    { name: "Italian", flag: "🇮🇹" },
+    { name: "German", flag: "🇩🇪" },
+    { name: "Croatian", flag: "🇭🇷" },
+    { name: "Albanian", flag: "🇦🇱" }
+];
+
 export const PERSONAL_INTERESTS = [
     {
         name: "Free-diving",
@@ -132,6 +147,20 @@ export const BOOK_FAVORITES = [
         author: "M. Bulgakov",
         image: "/media/The-master-and-margarita.jpg"
     }
+];
+
+export const MEMES = [
+    "/media/memes/G6NncL8a4AAutNf.jpg",
+    "/media/memes/Gxhgw1fWUAEHkIQ.jpg",
+    "/media/memes/Gn3vPSzWkAA2o6M.jpg",
+    "/media/memes/Gi09OuRWsAAbnKP.jpg",
+    "/media/memes/1_kY_XMZUzMqw0vEGgy1o_mg.jpg",
+    "/media/memes/GgDeX1iXQAAbVQN.jpg",
+    "/media/memes/GXrn82PXgAAz9UV.jpg",
+    "/media/memes/GVlpcSjXIAABjY4.jpg",
+    "/media/memes/GOgs0jcXcAAPuIL.jpg",
+    "/media/memes/IMG_1596.JPG",
+    "/media/memes/Ev2woASU8AAesDs.jpg"
 ];
 
 export const THEMES = [

@@ -501,9 +501,20 @@ export default function ExperienceView({ slug }: { slug: string }) {
                     className="mb-12 sm:mb-16"
                 >
                     <div className="flex flex-col gap-4 sm:gap-6 mb-6 sm:mb-8">
-                        <h1 className="text-4xl sm:text-5xl lg:text-7xl font-light tracking-tight text-[var(--text-main)]">
-                            {experience.company}
-                        </h1>
+                        <div className="flex items-center gap-4 sm:gap-8">
+                            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-light tracking-tight text-[var(--text-main)]">
+                                {experience.company}
+                            </h1>
+                            {(experience as any).logo && (
+                                <div className="relative w-12 h-12 sm:w-16 sm:h-16 lg:w-24 lg:h-24 rounded-xl sm:rounded-2xl overflow-hidden border border-[var(--border-color)] bg-[var(--panel-bg)]">
+                                    <img
+                                        src={(experience as any).logo}
+                                        alt={`${experience.company} Logo`}
+                                        className="w-full h-full object-cover"
+                                    />
+                                </div>
+                            )}
+                        </div>
                         <div className="flex flex-wrap gap-4 text-[var(--text-muted)] text-sm sm:text-base">
                             <div className="flex items-center gap-2">
                                 <Building2 className="w-4 h-4" />

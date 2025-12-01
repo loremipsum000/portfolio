@@ -5,7 +5,8 @@ export const EXPERIENCE = [
         period: "2024—Present",
         desc: "Leading rebrand of the entire chain & sub-brands.",
         slug: "sonic-labs",
-        description: "Leading the comprehensive rebranding initiative for Sonic Labs and all its sub-brands. Developing cohesive visual identity systems, design language, and brand guidelines that reflect the innovative nature of the blockchain ecosystem."
+        description: "Leading the comprehensive rebranding initiative for Sonic Labs and all its sub-brands. Developing cohesive visual identity systems, design language, and brand guidelines that reflect the innovative nature of the blockchain ecosystem.",
+        logo: "/media/sonic-labs/sonic-pfp.jpg"
     },
     {
         role: "Lead Designer",

@@ -249,7 +249,7 @@ export default function ExperienceDetailPage() {
     // Special handling for sonic-labs
     if (slug === 'sonic-labs') {
         const { howItStarted, website, brandGuidelines, mysonic, mysonicAspectRatios, feem, spawn, brand } = getSonicLabsImages();
-        const allImages = [...howItStarted, ...website];
+     
 
         return (
             <div className="min-h-screen font-sans selection:bg-[rgb(var(--theme-rgb))]/30 selection:text-[var(--text-main)] overflow-x-hidden transition-colors duration-500 relative"

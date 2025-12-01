@@ -31,6 +31,7 @@ interface ExperienceFeature {
     key: string;
     layout: 'grid' | 'pinterest' | 'carousel';
     aspectRatio?: string; // Optional override for grid layout (e.g. '16/9' or '4/3')
+    description?: string; // Added description for section
 }
 
 // --- Embedded Theme Selector (Fail-Safe) ---
@@ -71,13 +72,13 @@ const getSonicLabsImages = (): ExperienceData => {
             src: '/media/sonic-labs/how-it-started/sonic-initial-sketch-01.jpg',
             alt: 'Sonic Initial Sketch 01',
             title: 'Initial Sketch 01',
-            description: 'Early conceptual sketch exploring the Sonic Labs brand identity'
+            description: ''
         },
         {
             src: '/media/sonic-labs/how-it-started/sonic-initial-sketch-02.jpg',
             alt: 'Sonic Initial Sketch 02',
             title: 'Initial Sketch 02',
-            description: 'Further development of the initial brand concept'
+            description: ''
         }
     ];
 
@@ -115,73 +116,73 @@ const getSonicLabsImages = (): ExperienceData => {
             src: '/media/sonic-labs/brand/sonic-banner.jpg',
             alt: 'Sonic Banner',
             title: 'Brand Banner',
-            description: 'Main brand visual identity banner'
+            description: ''
         },
         {
             src: '/media/sonic-labs/brand/sonic-defi.jpg',
             alt: 'DeFi Visuals',
             title: 'DeFi Dashboard',
-            description: 'Decentralized finance platform visualization'
+            description: ''
         },
         {
             src: '/media/sonic-labs/brand/sonic-summit-banner.jpg',
             alt: 'Summit Banner',
             title: 'Summit Assets',
-            description: 'Event branding for Sonic Summit'
+            description: ''
         },
         {
             src: '/media/sonic-labs/brand/sonic-summit-inviite.jpg',
             alt: 'Summit Invite',
             title: 'Summit Invitation',
-            description: 'Digital invitation design for stakeholders'
+            description: ''
         },
         {
             src: '/media/sonic-labs/brand/sonic-summit-speakers.jpg',
             alt: 'Speakers Card',
             title: 'Speaker Template',
-            description: 'Social media templates for event speakers'
+            description: ''
         },
         {
             src: '/media/sonic-labs/brand/sonicdb.jpg',
             alt: 'Sonic DB',
             title: 'Database Visuals',
-            description: 'Technical infrastructure visualization'
+            description: ''
         },
         {
             src: '/media/sonic-labs/brand/sonicxgasly22.jpg',
             alt: 'Pierre Gasly Collab',
             title: 'Partnership Asset',
-            description: 'Brand collaboration materials'
+            description: ''
         },
         {
             src: '/media/sonic-labs/brand/stickers.jpg',
             alt: 'Stickers',
             title: 'Brand Swag',
-            description: 'Physical merchandise and sticker designs'
+            description: ''
         },
         {
             src: '/media/sonic-labs/brand/EcoMap22.jpg',
             alt: 'Ecosystem Map',
             title: 'Ecosystem',
-            description: 'Visual map of the Sonic ecosystem'
+            description: ''
         },
         {
             src: '/media/sonic-labs/brand/1banner012.jpg',
             alt: 'Alternative Banner',
             title: 'Campaign Banner',
-            description: 'Alternative visual direction for campaigns'
+            description: ''
         },
         {
             src: '/media/sonic-labs/brand/sonic-event-01.jpg',
             alt: 'Event Photo 1',
             title: 'Event Photography',
-            description: 'Live event branding implementation'
+            description: ''
         },
         {
             src: '/media/sonic-labs/brand/sonic-event-02.jpg',
             alt: 'Event Photo 2',
             title: 'Event Atmosphere',
-            description: 'Brand presence at industry events'
+            description: ''
         }
     ];
 
@@ -319,13 +320,49 @@ const getExperienceFeatures = (slug: string): ExperienceFeature[] => {
     switch (slug) {
         case 'sonic-labs':
             return [
-                { title: 'Brand Identity', key: 'brand', layout: 'grid', aspectRatio: '16/9' },
-                { title: 'Website Design', key: 'website', layout: 'pinterest' },
-                { title: 'Brand Guidelines', key: 'brandGuidelines', layout: 'carousel' },
-                { title: 'MySonic Dashboard', key: 'mySonic', layout: 'pinterest' },
-                { title: 'FEEM Protocol', key: 'feem', layout: 'pinterest' },
-                { title: 'Spawn Game', key: 'spawn', layout: 'pinterest' },
-                { title: 'Early Concepts', key: 'howItStarted', layout: 'grid', aspectRatio: '4/3' }
+                { 
+                    title: 'Where it started', 
+                    key: 'howItStarted', 
+                    layout: 'grid', 
+                    aspectRatio: '4/3',
+                    description: 'Early conceptual sketches and initial explorations that laid the foundation for the Sonic Labs brand identity. These initial designs capture the creative process and evolution of the visual language.'
+                },
+                { 
+                    title: "Where it's now", 
+                    key: 'brand', 
+                    layout: 'pinterest',
+                    description: 'The current brand identity system, featuring a cohesive visual language across digital and physical touchpoints. From event branding to social media assets, the system is designed to be flexible and scalable.'
+                },
+                { 
+                    title: 'Website Design', 
+                    key: 'website', 
+                    layout: 'pinterest',
+                    description: 'Interactive prototypes and interface designs for the main Sonic Labs website. These designs showcase the user experience, navigation patterns, and visual design system applied across different sections of the platform.'
+                },
+                { 
+                    title: 'Brand Guidelines', 
+                    key: 'brandGuidelines', 
+                    layout: 'carousel',
+                    description: 'Comprehensive brand guidelines documenting the visual identity system for Sonic Labs. This includes logo usage, color palettes, typography, spacing systems, and application examples.'
+                },
+                { 
+                    title: 'MySonic Dashboard', 
+                    key: 'mySonic', 
+                    layout: 'pinterest',
+                    description: 'MySonic is a comprehensive user dashboard that provides access to staking, governance, bridging, and ecosystem features. The interface design focuses on clarity and ease of use.'
+                },
+                { 
+                    title: 'FEEM Protocol', 
+                    key: 'feem', 
+                    layout: 'pinterest',
+                    description: 'The Fee Monetization Dashboard provides users with comprehensive tools to manage and track fee-related activities. The design emphasizes data visualization and real-time analytics.'
+                },
+                { 
+                    title: 'Spawn Game', 
+                    key: 'spawn', 
+                    layout: 'pinterest',
+                    description: 'Spawn is a key feature of the Sonic ecosystem, designed to facilitate seamless interactions and operations. The interface design focuses on intuitive user flows and clear information architecture.'
+                }
             ];
         
         default:
@@ -499,10 +536,16 @@ export default function ExperienceView({ slug }: { slug: string }) {
                                     viewport={{ once: true, margin: "-100px" }}
                                     transition={{ duration: 0.7 }}
                                 >
-                                    <h2 className="text-2xl sm:text-3xl font-light mb-6 sm:mb-8 flex items-center gap-3 text-[var(--text-main)]">
-                                        <span className="w-8 sm:w-12 h-[1px] bg-[rgb(var(--theme-rgb))] opacity-50"></span>
+                                    <h2 className="text-2xl sm:text-3xl font-light mb-6 flex items-center gap-3 text-[var(--text-main)]">
+                                        <span className="w-8 sm:w-12 h-[1px] bg-[var(--text-muted)] opacity-50"></span>
                                         {feature.title}
                                     </h2>
+                                    
+                                    {feature.description && (
+                                        <p className="text-sm text-[var(--text-muted)] mb-8 leading-relaxed max-w-3xl">
+                                            {feature.description}
+                                        </p>
+                                    )}
 
                                     {feature.layout === 'carousel' ? (
                                         <BrandGuidelinesCarousel
@@ -529,6 +572,12 @@ export default function ExperienceView({ slug }: { slug: string }) {
                                                     {...image}
                                                     onClick={() => openModal(sectionImages, imgIndex)}
                                                     aspectRatio={feature.aspectRatio || '16/9'}
+                                                    // Only show title/desc if it's NOT 'howItStarted' or 'brand' (Where it started/Where it's now)
+                                                    // BUT per new instructions: remove from cards for "Where it's now" (brand) and "Where it started" (howItStarted)
+                                                    // For "howItStarted" user specifically said: "remove this title and description from the cards in this section"
+                                                    // So we hide it for both specific sections where we moved to section description
+                                                    title={ (feature.key === 'howItStarted' || feature.key === 'brand') ? '' : image.title }
+                                                    description={ (feature.key === 'howItStarted' || feature.key === 'brand') ? '' : image.description }
                                                 />
                                             ))}
                                         </div>

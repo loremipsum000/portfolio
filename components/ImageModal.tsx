@@ -1,0 +1,227 @@
+'use client';
+
+import { useEffect, useState, useRef } from 'react';
+import Image from 'next/image';
+import { X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+
+interface ImageModalProps {
+    isOpen: boolean;
+    onClose: () => void;
+    images: Array<{ src: string; alt: string; title: string; description?: string; isVideo?: boolean; embedUrl?: string }>;
+    initialIndex: number;
+}
+
+export default function ImageModal({ isOpen, onClose, images, initialIndex }: ImageModalProps) {
+    const [currentIndex, setCurrentIndex] = useState(initialIndex);
+    const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+    const [isMagnifying, setIsMagnifying] = useState(false);
+    const imageRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (isOpen) {
+            setCurrentIndex(initialIndex);
+        }
+    }, [isOpen, initialIndex]);
+
+    useEffect(() => {
+        if (!isOpen) return;
+
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') {
+                onClose();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                setCurrentIndex((prev) => (prev > 0 ? prev - 1 : images.length - 1));
+            } else if (e.key === 'ArrowRight') {
+                e.preventDefault();
+                setCurrentIndex((prev) => (prev < images.length - 1 ? prev + 1 : 0));
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [isOpen, images.length, onClose]);
+
+    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+        if (!imageRef.current || currentImage.isVideo) return;
+        
+        const rect = imageRef.current.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        
+        setMousePosition({ x: Math.max(0, Math.min(100, x)), y: Math.max(0, Math.min(100, y)) });
+        setIsMagnifying(true);
+    };
+
+    const handleMouseLeave = () => {
+        setIsMagnifying(false);
+    };
+
+    const currentImage = images[currentIndex];
+
+    if (!isOpen || !currentImage) return null;
+
+    return (
+        <AnimatePresence>
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm flex items-center justify-center p-4"
+                onClick={onClose}
+            >
+                {/* Close button */}
+                <button
+                    onClick={onClose}
+                    className="absolute top-4 right-4 z-50 p-2 rounded-full bg-black/50 hover:bg-black/70 text-white transition-colors"
+                    aria-label="Close"
+                >
+                    <X size={24} />
+                </button>
+
+                {/* Navigation buttons */}
+                {images.length > 1 && (
+                    <>
+                        <button
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                setCurrentIndex((prev) => (prev > 0 ? prev - 1 : images.length - 1));
+                            }}
+                            className="absolute left-4 z-50 p-3 rounded-full bg-black/50 hover:bg-black/70 text-white transition-colors"
+                            aria-label="Previous"
+                        >
+                            <ChevronLeft size={24} />
+                        </button>
+                        <button
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                setCurrentIndex((prev) => (prev < images.length - 1 ? prev + 1 : 0));
+                            }}
+                            className="absolute right-4 z-50 p-3 rounded-full bg-black/50 hover:bg-black/70 text-white transition-colors"
+                            aria-label="Next"
+                        >
+                            <ChevronRight size={24} />
+                        </button>
+                    </>
+                )}
+
+                {/* Image container with magnifying glass effect */}
+                <motion.div
+                    initial={{ scale: 0.9, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={{ scale: 0.9, opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                    className="relative max-w-[90vw] max-h-[90vh] w-full h-full flex items-center justify-center"
+                    onClick={(e) => e.stopPropagation()}
+                >
+                    <div
+                        className="relative w-full h-full flex items-center justify-center"
+                        onMouseMove={currentImage.embedUrl ? undefined : handleMouseMove}
+                        onMouseLeave={currentImage.embedUrl ? undefined : handleMouseLeave}
+                    >
+                        {currentImage.embedUrl ? (
+                            <div className="relative w-full h-full max-w-[90vw] max-h-[90vh] bg-white rounded-lg overflow-hidden">
+                                <iframe
+                                    src={currentImage.embedUrl}
+                                    className="w-full h-full border-0"
+                                    style={{ 
+                                        width: '100%', 
+                                        height: '100%',
+                                        minHeight: '600px',
+                                        border: '1px solid rgba(0, 0, 0, 0.1)'
+                                    }}
+                                    allowFullScreen
+                                />
+                            </div>
+                        ) : currentImage.isVideo ? (
+                            <video
+                                src={currentImage.src}
+                                className="max-w-full max-h-full object-contain"
+                                autoPlay
+                                loop
+                                muted
+                                playsInline
+                                controls
+                            />
+                        ) : (
+                            <div 
+                                ref={imageRef}
+                                className="relative w-full h-full flex items-center justify-center"
+                            >
+                                {/* Main image container - fill available VH */}
+                                <div className="relative w-full h-full flex items-center justify-center">
+                                    <Image
+                                        src={currentImage.src}
+                                        alt={currentImage.alt}
+                                        width={1920}
+                                        height={1080}
+                                        className="w-auto h-auto object-contain"
+                                        style={{ maxHeight: '95vh', maxWidth: '95vw' }}
+                                    />
+                                </div>
+                                
+                                {/* Magnifying glass effect - only the circle around mouse */}
+                                {isMagnifying && imageRef.current && (
+                                    <>
+                                        {/* Dark overlay with circular cutout using mask */}
+                                        <div 
+                                            className="absolute inset-0 pointer-events-none"
+                                            style={{
+                                                background: 'rgba(0, 0, 0, 0.6)',
+                                                maskImage: `radial-gradient(circle 150px at ${mousePosition.x}% ${mousePosition.y}%, transparent 0%, transparent 100%, black 100%)`,
+                                                WebkitMaskImage: `radial-gradient(circle 150px at ${mousePosition.x}% ${mousePosition.y}%, transparent 0%, transparent 100%, black 100%)`,
+                                                zIndex: 10
+                                            }}
+                                        />
+                                        
+                                        {/* Magnified circle - only shows zoomed portion */}
+                                        <div 
+                                            className="absolute pointer-events-none overflow-hidden rounded-full border-2 border-white/60"
+                                            style={{
+                                                width: '300px',
+                                                height: '300px',
+                                                left: `calc(${mousePosition.x}% - 150px)`,
+                                                top: `calc(${mousePosition.y}% - 150px)`,
+                                                zIndex: 11
+                                            }}
+                                        >
+                                            <div
+                                                className="absolute"
+                                                style={{
+                                                    width: `${imageRef.current.offsetWidth * 1.8}px`,
+                                                    height: `${imageRef.current.offsetHeight * 1.8}px`,
+                                                    left: `${-mousePosition.x * imageRef.current.offsetWidth * 1.8 / 100 + 150}px`,
+                                                    top: `${-mousePosition.y * imageRef.current.offsetHeight * 1.8 / 100 + 150}px`
+                                                }}
+                                            >
+                                                <Image
+                                                    src={currentImage.src}
+                                                    alt={currentImage.alt}
+                                                    width={1920}
+                                                    height={1080}
+                                                    className="w-full h-full object-contain"
+                                                    style={{ maxWidth: 'none', maxHeight: 'none' }}
+                                                />
+                                            </div>
+                                        </div>
+                                    </>
+                                )}
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Image counter only */}
+                    {images.length > 1 && (
+                        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/70 backdrop-blur-sm rounded-lg px-4 py-2">
+                            <p className="text-white/80 text-xs">
+                                {currentIndex + 1} / {images.length}
+                            </p>
+                        </div>
+                    )}
+                </motion.div>
+            </motion.div>
+        </AnimatePresence>
+    );
+}
+

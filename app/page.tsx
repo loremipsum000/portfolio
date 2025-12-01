@@ -20,6 +20,7 @@ import Visualizer from '@/components/Visualizer';
 import PersonalInterests from '@/components/PersonalInterests';
 import BookFavorites from '@/components/BookFavorites';
 import FavoriteMemes from '@/components/FavoriteMemes';
+import CopyEmailButton from '@/components/CopyEmailButton';
 import { EXPERIENCE, SKILLS, TOOLS, LANGUAGES, THEME_RGB_VALUES } from '@/lib/constants';
 import Link from 'next/link';
 
@@ -112,12 +113,10 @@ export default function Home() {
                         </div>
                         
                         <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 mt-6 sm:mt-8 relative z-10">
-                            <a href="mailto:hello@lorem-portfolio.com" className="flex items-center gap-2 text-sm font-medium text-[var(--text-main)] hover:text-[rgb(var(--theme-rgb))] transition-colors duration-300">
-                                <Mail size={16} /> Get in touch
-                            </a>
-                            <a href="https://www.behance.net/dardan-berisha" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm font-medium text-[var(--text-muted)] hover:text-[var(--text-main)] transition-colors">
-                                <Globe size={16} /> Behance
-                            </a>
+                            <CopyEmailButton 
+                                email="hello@lorem-portfolio.com" 
+                                className="text-sm text-[var(--text-main)] hover:text-[rgb(var(--theme-rgb))]" 
+                            />
                         </div>
                     </motion.section>
 
@@ -325,7 +324,12 @@ export default function Home() {
                                 <div className="flex gap-2 mb-6">
                                     <a href="https://x.com/Lorem_Ipsum95" target="_blank" rel="noreferrer" className="p-2 bg-[var(--bg-main)]/50 rounded-lg hover:bg-[rgb(var(--theme-rgb))] hover:text-white text-[var(--text-muted)] transition-colors duration-300"><Twitter size={18} /></a>
                                     <a href="https://github.com/loremipsum000" target="_blank" rel="noreferrer" className="p-2 bg-[var(--bg-main)]/50 rounded-lg hover:bg-[rgb(var(--theme-rgb))] hover:text-white text-[var(--text-muted)] transition-colors duration-300"><Github size={18} /></a>
-                                    <a href="mailto:hello@lorem-portfolio.com" className="p-2 bg-[var(--bg-main)]/50 rounded-lg hover:bg-[rgb(var(--theme-rgb))] hover:text-white text-[var(--text-muted)] transition-colors duration-300"><Mail size={18} /></a>
+                                    <CopyEmailButton 
+                                        email="hello@lorem-portfolio.com" 
+                                        showEmail={false}
+                                        iconOnly={true}
+                                        className="p-2 bg-[var(--bg-main)]/50 rounded-lg hover:bg-[rgb(var(--theme-rgb))] hover:text-white text-[var(--text-muted)] transition-colors duration-300" 
+                                    />
                                 </div>
                                 
                                 {/* Languages Section */}

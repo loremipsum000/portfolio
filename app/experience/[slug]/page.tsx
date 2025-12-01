@@ -10,6 +10,17 @@ import ImageModal from '@/components/ImageModal';
 import BrandGuidelinesCarousel from '@/components/BrandGuidelinesCarousel';
 import PinterestImageCard from '@/components/PinterestImageCard';
 
+// ... imports
+import { EXPERIENCE } from '@/lib/constants'; // Ensure this import exists
+
+// Tell Next.js which pages to build
+export async function generateStaticParams() {
+  return EXPERIENCE.map((experience) => ({
+    slug: experience.slug,
+  }));
+}
+
+
 // Helper function to get images for sonic-labs
 const getSonicLabsImages = () => {
     const howItStarted = [

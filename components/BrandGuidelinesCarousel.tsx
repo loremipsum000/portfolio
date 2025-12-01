@@ -172,8 +172,8 @@ export default function BrandGuidelinesCarousel({ images, onImageClick }: BrandG
             </div>
 
             {/* Thumbnail navigation */}
-            <div className="p-4 sm:p-6 border-t border-[var(--border-color)]">
-                <div className="flex gap-2 overflow-x-auto custom-scrollbar pb-2">
+            <div className="p-4 sm:p-6 border-t border-[var(--border-color)] overflow-hidden">
+                <div className="flex gap-2 overflow-x-auto custom-scrollbar pb-2 w-full">
                     {images.map((image, index) => (
                         <button
                             key={index}

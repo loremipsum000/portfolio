@@ -5,12 +5,12 @@ export const EXPERIENCE = [
         period: "2024—Present",
         desc: "Leading rebrand of the entire chain & sub-brands.",
         slug: "sonic-labs",
-        description: "Leading the comprehensive rebranding initiative for Sonic Labs and all its sub-brands. Developing cohesive visual identity systems, design language, and brand guidelines that reflect the innovative nature of the blockchain ecosystem.",
+        description: "Leading the comprehensive rebranding initiative for Sonic Labs and all its sub-brands. Developed a cohesive visual identity system, design language, and brand guidelines that reflect the innovative nature of the blockchain ecosystem.",
         logo: "/media/sonic-labs/sonic-pfp.jpg"
     },
     {
         role: "Lead Designer",
-        company: "Fantom Fdn",
+        company: "Fantom Foundation",
         period: "2022—2024",
         desc: "Product design for fWallet & ecosystem branding.",
         slug: "fantom-foundation",
@@ -18,7 +18,7 @@ export const EXPERIENCE = [
     },
     {
         role: "Product Designer",
-        company: "Mueshi",
+        company: "Mueshi Inc.",
         period: "2022—2023",
         desc: "Web3 NFT marketplace identity & UX.",
         slug: "mueshi",
@@ -34,7 +34,7 @@ export const EXPERIENCE = [
     },
     {
         role: "System Designer",
-        company: "Porsche Digital",
+        company: "Porsche Digital Croatia",
         period: "2020—2021",
         desc: "Design systems & components for Porsche products UI.",
         slug: "porsche-digital",

@@ -334,34 +334,34 @@ const getExperienceFeatures = (slug: string): ExperienceFeature[] => {
                     description: 'The current brand identity system, featuring a cohesive visual language across digital and physical touchpoints. From event branding to social media assets, the system is designed to be flexible and scalable.'
                 },
                 { 
-                    title: 'Website Design', 
-                    key: 'website', 
-                    layout: 'pinterest',
-                    description: 'Interactive prototypes and interface designs for the main Sonic Labs website. These designs showcase the user experience, navigation patterns, and visual design system applied across different sections of the platform.'
-                },
-                { 
                     title: 'Brand Guidelines', 
                     key: 'brandGuidelines', 
                     layout: 'carousel',
                     description: 'Comprehensive brand guidelines documenting the visual identity system for Sonic Labs. This includes logo usage, color palettes, typography, spacing systems, and application examples.'
                 },
                 { 
+                    title: 'Website Design', 
+                    key: 'website', 
+                    layout: 'pinterest',
+                    description: 'Interactive prototypes and interface designs for the main Sonic Labs website. These designs showcase the user experience, navigation patterns, and visual design system applied across different sections of the platform.'
+                },
+                { 
                     title: 'MySonic Dashboard', 
                     key: 'mySonic', 
                     layout: 'pinterest',
-                    description: 'MySonic is a comprehensive user dashboard that provides access to staking, governance, bridging, and ecosystem features. The interface design focuses on clarity and ease of use.'
+                    description: 'MySonic is a web-app built by Labs that provides Sonic users access to staking, governance, bridging, ecosystem exploration, and more.'
                 },
                 { 
-                    title: 'FEEM Protocol', 
+                    title: 'FeeM Dashboard', 
                     key: 'feem', 
                     layout: 'pinterest',
-                    description: 'The Fee Monetization Dashboard provides users with comprehensive tools to manage and track fee-related activities. The design emphasizes data visualization and real-time analytics.'
+                    description: 'The Fee Monetization is unique mechanism that can only be found on Sonic, it resembles YouTube adsense where gas fees produced by Apps get distributed back to the developers, thus creating an economic incentive for them. The FeeM Dashboard provides users with comprehensive tools to manage and track fee-related activities. The design emphasizes data visualization and real-time analytics.'
                 },
                 { 
-                    title: 'Spawn Game', 
+                    title: 'Spawn: Web3 No-Code App Builder', 
                     key: 'spawn', 
                     layout: 'pinterest',
-                    description: 'Spawn is a key feature of the Sonic ecosystem, designed to facilitate seamless interactions and operations. The interface design focuses on intuitive user flows and clear information architecture.'
+                    description: 'Spawn is another unique app built by the Sonic Team, designed to allow user to build and deploy their own web3 apps without coding. Currently in open beta.'
                 }
             ];
         
@@ -502,9 +502,6 @@ export default function ExperienceView({ slug }: { slug: string }) {
                 >
                     <div className="flex flex-col gap-4 sm:gap-6 mb-6 sm:mb-8">
                         <div className="flex items-center gap-4 sm:gap-8">
-                            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-light tracking-tight text-[var(--text-main)]">
-                                {experience.company}
-                            </h1>
                             {(experience as any).logo && (
                                 <div className="relative w-12 h-12 sm:w-16 sm:h-16 lg:w-24 lg:h-24 rounded-xl sm:rounded-2xl overflow-hidden border border-[var(--border-color)] bg-[var(--panel-bg)]">
                                     <img
@@ -514,6 +511,9 @@ export default function ExperienceView({ slug }: { slug: string }) {
                                     />
                                 </div>
                             )}
+                            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-light tracking-tight text-[var(--text-main)]">
+                                {experience.company}
+                            </h1>
                         </div>
                         <div className="flex flex-wrap gap-4 text-[var(--text-muted)] text-sm sm:text-base">
                             <div className="flex items-center gap-2">

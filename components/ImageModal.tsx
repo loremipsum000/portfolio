@@ -14,9 +14,7 @@ interface ImageModalProps {
 
 export default function ImageModal({ isOpen, onClose, images, initialIndex }: ImageModalProps) {
     const [currentIndex, setCurrentIndex] = useState(initialIndex);
-    const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-    const [isMagnifying, setIsMagnifying] = useState(false);
-    const imageRef = useRef<HTMLDivElement>(null);
+    // Removed magnifying effect state
 
     useEffect(() => {
         if (isOpen) {
@@ -42,21 +40,6 @@ export default function ImageModal({ isOpen, onClose, images, initialIndex }: Im
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, [isOpen, images.length, onClose]);
-
-    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-        if (!imageRef.current || currentImage.isVideo) return;
-        
-        const rect = imageRef.current.getBoundingClientRect();
-        const x = ((e.clientX - rect.left) / rect.width) * 100;
-        const y = ((e.clientY - rect.top) / rect.height) * 100;
-        
-        setMousePosition({ x: Math.max(0, Math.min(100, x)), y: Math.max(0, Math.min(100, y)) });
-        setIsMagnifying(true);
-    };
-
-    const handleMouseLeave = () => {
-        setIsMagnifying(false);
-    };
 
     const currentImage = images[currentIndex];
 
@@ -117,8 +100,6 @@ export default function ImageModal({ isOpen, onClose, images, initialIndex }: Im
                 >
                     <div
                         className="relative w-full h-full flex items-center justify-center"
-                        onMouseMove={currentImage.embedUrl ? undefined : handleMouseMove}
-                        onMouseLeave={currentImage.embedUrl ? undefined : handleMouseLeave}
                     >
                         {currentImage.embedUrl ? (
                             <div className="relative w-full h-full max-w-[90vw] max-h-[90vh] bg-white rounded-lg overflow-hidden">
@@ -146,7 +127,6 @@ export default function ImageModal({ isOpen, onClose, images, initialIndex }: Im
                             />
                         ) : (
                             <div 
-                                ref={imageRef}
                                 className="relative w-full h-full flex items-center justify-center"
                             >
                                 {/* Main image container - fill available VH */}
@@ -160,53 +140,6 @@ export default function ImageModal({ isOpen, onClose, images, initialIndex }: Im
                                         style={{ maxHeight: '95vh', maxWidth: '95vw' }}
                                     />
                                 </div>
-                                
-                                {/* Magnifying glass effect - only the circle around mouse */}
-                                {isMagnifying && imageRef.current && (
-                                    <>
-                                        {/* Dark overlay with circular cutout using mask */}
-                                        <div 
-                                            className="absolute inset-0 pointer-events-none"
-                                            style={{
-                                                background: 'rgba(0, 0, 0, 0.6)',
-                                                maskImage: `radial-gradient(circle 150px at ${mousePosition.x}% ${mousePosition.y}%, transparent 0%, transparent 100%, black 100%)`,
-                                                WebkitMaskImage: `radial-gradient(circle 150px at ${mousePosition.x}% ${mousePosition.y}%, transparent 0%, transparent 100%, black 100%)`,
-                                                zIndex: 10
-                                            }}
-                                        />
-                                        
-                                        {/* Magnified circle - only shows zoomed portion */}
-                                        <div 
-                                            className="absolute pointer-events-none overflow-hidden rounded-full border-2 border-white/60"
-                                            style={{
-                                                width: '300px',
-                                                height: '300px',
-                                                left: `calc(${mousePosition.x}% - 150px)`,
-                                                top: `calc(${mousePosition.y}% - 150px)`,
-                                                zIndex: 11
-                                            }}
-                                        >
-                                            <div
-                                                className="absolute"
-                                                style={{
-                                                    width: `${imageRef.current.offsetWidth * 1.8}px`,
-                                                    height: `${imageRef.current.offsetHeight * 1.8}px`,
-                                                    left: `${-mousePosition.x * imageRef.current.offsetWidth * 1.8 / 100 + 150}px`,
-                                                    top: `${-mousePosition.y * imageRef.current.offsetHeight * 1.8 / 100 + 150}px`
-                                                }}
-                                            >
-                                                <Image
-                                                    src={currentImage.src}
-                                                    alt={currentImage.alt}
-                                                    width={1920}
-                                                    height={1080}
-                                                    className="w-full h-full object-contain"
-                                                    style={{ maxWidth: 'none', maxHeight: 'none' }}
-                                                />
-                                            </div>
-                                        </div>
-                                    </>
-                                )}
                             </div>
                         )}
                     </div>

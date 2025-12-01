@@ -1,15 +1,44 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, Calendar, Building2 } from 'lucide-react';
-import { EXPERIENCE } from '@/lib/constants';
+import { ArrowLeft, Calendar, Building2, Sun, Moon } from 'lucide-react';
+import { EXPERIENCE, THEMES } from '@/lib/constants';
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import ImageCard from '@/components/ImageCard';
 import ImageModal from '@/components/ImageModal';
 import BrandGuidelinesCarousel from '@/components/BrandGuidelinesCarousel';
 import PinterestImageCard from '@/components/PinterestImageCard';
-import ThemeSelector from '@/components/ThemeSelector'; 
+
+// --- Embedded Theme Selector (Fail-Safe) ---
+const SimpleThemeSelector = ({ currentTheme, setTheme, isDark, toggleDarkMode }: any) => {
+    return (
+        <div className="flex items-center gap-2 sm:gap-4 bg-[var(--surface)] p-1.5 sm:p-2 rounded-full border border-[var(--border)]">
+            <div className="flex items-center gap-1 sm:gap-2 px-1 sm:px-2">
+                {THEMES.map((theme, index) => (
+                    <button
+                        key={theme.name}
+                        onClick={() => setTheme(index)}
+                        className={`w-4 h-4 sm:w-6 sm:h-6 rounded-full transition-all duration-300 ${
+                            currentTheme === index ? 'scale-110 ring-2 ring-offset-2 ring-offset-[var(--background)]' : 'hover:scale-110 opacity-70 hover:opacity-100'
+                        }`}
+                        style={{ backgroundColor: theme.color }}
+                        title={theme.name}
+                        aria-label={`Select ${theme.name} theme`}
+                    />
+                ))}
+            </div>
+            <div className="w-[1px] h-4 sm:h-6 bg-[var(--border)]" />
+            <button
+                onClick={toggleDarkMode}
+                className="p-1.5 sm:p-2 rounded-full hover:bg-[var(--background)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
+                aria-label="Toggle dark mode"
+            >
+                {isDark ? <Sun className="w-4 h-4 sm:w-5 sm:h-5" /> : <Moon className="w-4 h-4 sm:w-5 sm:h-5" />}
+            </button>
+        </div>
+    );
+};
 
 // --- Helper Functions ---
 
@@ -350,7 +379,7 @@ export default function ExperienceView({ slug }: { slug: string }) {
                     </button>
                     
                     <div className="flex items-center gap-4">
-                        <ThemeSelector 
+                        <SimpleThemeSelector 
                             currentTheme={activeTheme} 
                             setTheme={setActiveTheme} 
                             isDark={isDark} 

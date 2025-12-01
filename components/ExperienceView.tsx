@@ -9,9 +9,8 @@ import ImageCard from '@/components/ImageCard';
 import ImageModal from '@/components/ImageModal';
 import BrandGuidelinesCarousel from '@/components/BrandGuidelinesCarousel';
 import PinterestImageCard from '@/components/PinterestImageCard';
-// Removed unused ThemeSelector import to fix build error
 
-// --- Type Definitions (Crucial for Build) ---
+// --- Type Definitions ---
 
 interface ImageAsset {
     src: string;
@@ -21,14 +20,17 @@ interface ImageAsset {
     embedUrl?: string;
 }
 
-interface SonicLabsData {
-    howItStarted: ImageAsset[];
-    website: ImageAsset[];
-    brandGuidelines: ImageAsset[];
-    brand: ImageAsset[];
-    feem: ImageAsset[];
-    mySonic: ImageAsset[];
-    spawn: ImageAsset[];
+// Flexible data structure for any project
+interface ExperienceData {
+    [key: string]: ImageAsset[];
+}
+
+// Configuration for each section
+interface ExperienceFeature {
+    title: string;
+    key: string;
+    layout: 'grid' | 'pinterest' | 'carousel';
+    aspectRatio?: string; // Optional override for grid layout (e.g. '16/9' or '4/3')
 }
 
 // --- Embedded Theme Selector (Fail-Safe) ---
@@ -61,9 +63,9 @@ const SimpleThemeSelector = ({ currentTheme, setTheme, isDark, toggleDarkMode }:
     );
 };
 
-// --- Helper Functions ---
+// --- Data Functions ---
 
-const getSonicLabsImages = (): SonicLabsData => {
+const getSonicLabsImages = (): ExperienceData => {
     const howItStarted = [
         {
             src: '/media/sonic-labs/how-it-started/sonic-initial-sketch-01.jpg',
@@ -276,10 +278,12 @@ const getSonicLabsImages = (): SonicLabsData => {
     };
 };
 
-const getExperienceImages = (slug: string): SonicLabsData | null => {
+// 2. Retrieve Data
+const getExperienceImages = (slug: string): ExperienceData | null => {
     switch (slug) {
         case 'sonic-labs':
             return getSonicLabsImages();
+        // TODO: Add cases for 'fantom-foundation', 'mueshi', etc.
         default:
             return null;
     }
@@ -310,18 +314,20 @@ const getExperienceTheme = (slug: string) => {
     }
 };
 
-const getExperienceFeatures = (slug: string) => {
+// 3. Define Page Structure
+const getExperienceFeatures = (slug: string): ExperienceFeature[] => {
     switch (slug) {
         case 'sonic-labs':
             return [
-                { title: 'Brand Identity', key: 'brand' },
-                { title: 'Website Design', key: 'website' },
-                { title: 'Brand Guidelines', key: 'brandGuidelines' },
-                { title: 'MySonic Dashboard', key: 'mySonic' },
-                { title: 'FEEM Protocol', key: 'feem' },
-                { title: 'Spawn Game', key: 'spawn' },
-                { title: 'Early Concepts', key: 'howItStarted' }
+                { title: 'Brand Identity', key: 'brand', layout: 'grid', aspectRatio: '16/9' },
+                { title: 'Website Design', key: 'website', layout: 'pinterest' },
+                { title: 'Brand Guidelines', key: 'brandGuidelines', layout: 'carousel' },
+                { title: 'MySonic Dashboard', key: 'mySonic', layout: 'pinterest' },
+                { title: 'FEEM Protocol', key: 'feem', layout: 'pinterest' },
+                { title: 'Spawn Game', key: 'spawn', layout: 'pinterest' },
+                { title: 'Early Concepts', key: 'howItStarted', layout: 'grid', aspectRatio: '4/3' }
             ];
+        
         default:
             return [];
     }
@@ -481,9 +487,7 @@ export default function ExperienceView({ slug }: { slug: string }) {
                 {images ? (
                     <div className="space-y-16 sm:space-y-32">
                         {features.map((feature, index) => {
-                            // Use the interface for safe key access
-                            const sectionKey = feature.key as keyof SonicLabsData;
-                            const sectionImages = images[sectionKey];
+                            const sectionImages = images[feature.key];
 
                             if (!sectionImages || sectionImages.length === 0) return null;
 
@@ -500,23 +504,12 @@ export default function ExperienceView({ slug }: { slug: string }) {
                                         {feature.title}
                                     </h2>
 
-                                    {feature.key === 'brandGuidelines' ? (
+                                    {feature.layout === 'carousel' ? (
                                         <BrandGuidelinesCarousel
                                             images={sectionImages}
                                             onImageClick={(idx: any) => openModal(sectionImages, idx)}
                                         />
-                                    ) : feature.key === 'howItStarted' ? (
-                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-                                            {sectionImages.map((image, imgIndex) => (
-                                                <ImageCard
-                                                    key={imgIndex}
-                                                    {...image}
-                                                    onClick={() => openModal(sectionImages, imgIndex)}
-                                                    aspectRatio="4/3"
-                                                />
-                                            ))}
-                                        </div>
-                                    ) : feature.key === 'website' || feature.key === 'mySonic' || feature.key === 'feem' ? (
+                                    ) : feature.layout === 'pinterest' ? (
                                         <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 sm:gap-6 space-y-4 sm:space-y-6">
                                             {sectionImages.map((image, imgIndex) => (
                                                 <div key={imgIndex} className="break-inside-avoid">
@@ -528,13 +521,14 @@ export default function ExperienceView({ slug }: { slug: string }) {
                                             ))}
                                         </div>
                                     ) : (
-                                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                                        /* Default to Grid */
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                                             {sectionImages.map((image, imgIndex) => (
                                                 <ImageCard
                                                     key={imgIndex}
                                                     {...image}
                                                     onClick={() => openModal(sectionImages, imgIndex)}
-                                                    aspectRatio="16/9"
+                                                    aspectRatio={feature.aspectRatio || '16/9'}
                                                 />
                                             ))}
                                         </div>

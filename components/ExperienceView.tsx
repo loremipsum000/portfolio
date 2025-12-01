@@ -34,14 +34,14 @@ interface SonicLabsData {
 // --- Embedded Theme Selector (Fail-Safe) ---
 const SimpleThemeSelector = ({ currentTheme, setTheme, isDark, toggleDarkMode }: any) => {
     return (
-        <div className="flex items-center gap-2 sm:gap-4 bg-[var(--surface)] p-1.5 sm:p-2 rounded-full border border-[var(--border)]">
+        <div className="flex items-center gap-2 sm:gap-4 bg-[var(--panel-bg)] p-1.5 sm:p-2 rounded-full border border-[var(--border-color)]">
             <div className="flex items-center gap-1 sm:gap-2 px-1 sm:px-2">
                 {THEMES.map((theme, index) => (
                     <button
                         key={theme.name}
                         onClick={() => setTheme(index)}
                         className={`w-4 h-4 sm:w-6 sm:h-6 rounded-full transition-all duration-300 ${
-                            currentTheme === index ? 'scale-110 ring-2 ring-offset-2 ring-offset-[var(--background)]' : 'hover:scale-110 opacity-70 hover:opacity-100'
+                            currentTheme === index ? 'scale-110 ring-2 ring-offset-2 ring-offset-[var(--bg-main)]' : 'hover:scale-110 opacity-70 hover:opacity-100'
                         }`}
                         style={{ backgroundColor: theme.color }}
                         title={theme.name}
@@ -49,10 +49,10 @@ const SimpleThemeSelector = ({ currentTheme, setTheme, isDark, toggleDarkMode }:
                     />
                 ))}
             </div>
-            <div className="w-[1px] h-4 sm:h-6 bg-[var(--border)]" />
+            <div className="w-[1px] h-4 sm:h-6 bg-[var(--border-color)]" />
             <button
                 onClick={toggleDarkMode}
-                className="p-1.5 sm:p-2 rounded-full hover:bg-[var(--background)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
+                className="p-1.5 sm:p-2 rounded-full hover:bg-[var(--bg-main)] text-[var(--text-muted)] hover:text-[var(--text-main)] transition-colors"
                 aria-label="Toggle dark mode"
             >
                 {isDark ? <Sun className="w-4 h-4 sm:w-5 sm:h-5" /> : <Moon className="w-4 h-4 sm:w-5 sm:h-5" />}
@@ -363,16 +363,28 @@ export default function ExperienceView({ slug }: { slug: string }) {
         const root = document.documentElement;
         root.style.setProperty('--theme-rgb', theme.rgb);
         root.style.setProperty('--theme-hex', theme.hex);
+        
+        // Set scrollbar colors
+        root.style.setProperty(
+            '--scrollbar-thumb',
+            isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'
+        );
+        root.style.setProperty(
+            '--scrollbar-thumb-hover',
+            isDark ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.2)'
+        );
 
         return () => {
             root.style.removeProperty('--theme-rgb');
             root.style.removeProperty('--theme-hex');
+            root.style.removeProperty('--scrollbar-thumb');
+            root.style.removeProperty('--scrollbar-thumb-hover');
         };
-    }, [theme]);
+    }, [theme, isDark]);
 
     if (!experience) {
         return (
-            <div className="min-h-screen flex items-center justify-center text-[var(--text-primary)]">
+            <div className="min-h-screen flex items-center justify-center text-[var(--text-main)]" style={{ backgroundColor: isDark ? '#09090b' : '#f4f4f5' }}>
                 Experience not found
             </div>
         );
@@ -385,15 +397,36 @@ export default function ExperienceView({ slug }: { slug: string }) {
     };
 
     return (
-        <div className={`min-h-screen ${isDark ? 'dark' : ''} bg-[var(--background)] text-[var(--text-primary)] transition-colors duration-500`}>
+        <div 
+            className={`min-h-screen font-sans selection:bg-[rgb(var(--theme-rgb))]/30 selection:text-[var(--text-main)] overflow-x-hidden transition-colors duration-500 relative`}
+            style={{ 
+                "--theme-rgb": theme.rgb,
+                "--bg-main": isDark ? '#09090b' : '#f4f4f5',
+                "--text-main": isDark ? '#e4e4e7' : '#18181b',
+                "--text-muted": isDark ? '#a1a1aa' : '#71717a',
+                "--panel-bg": isDark ? 'rgba(24, 24, 27, 0.4)' : 'rgba(255, 255, 255, 0.5)',
+                "--border-color": isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.08)',
+                backgroundColor: 'var(--bg-main)',
+                color: 'var(--text-main)'
+            } as React.CSSProperties}
+        >
+            {/* Fixed Background Grid */}
+            <div className="fixed inset-0 z-[-1]" style={{
+                backgroundImage: isDark 
+                    ? "linear-gradient(to right, #27272a 1px, transparent 1px), linear-gradient(to bottom, #27272a 1px, transparent 1px)"
+                    : "linear-gradient(to right, #e4e4e7 1px, transparent 1px), linear-gradient(to bottom, #e4e4e7 1px, transparent 1px)",
+                backgroundSize: "40px 40px",
+                opacity: isDark ? 0.1 : 0.4
+            }}></div>
+
             {/* Header */}
-            <header className="fixed top-0 left-0 right-0 z-50 bg-[var(--background)]/80 backdrop-blur-md border-b border-[var(--border-color)]">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between">
+            <header className="fixed top-0 left-0 right-0 z-50 bg-[var(--bg-main)]/80 backdrop-blur-md border-b border-[var(--border-color)]">
+                <div className="max-w-[1280px] mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between">
                     <button
                         onClick={() => router.push('/')}
-                        className="p-2 -ml-2 hover:bg-[var(--surface)] rounded-full transition-colors group"
+                        className="p-2 -ml-2 hover:bg-[var(--panel-bg)] rounded-full transition-colors group"
                     >
-                        <ArrowLeft className="w-5 h-5 sm:w-6 sm:h-6 text-[var(--text-secondary)] group-hover:text-[var(--text-primary)] transition-colors" />
+                        <ArrowLeft className="w-5 h-5 sm:w-6 sm:h-6 text-[var(--text-muted)] group-hover:text-[var(--text-main)] transition-colors" />
                     </button>
                     
                     <div className="flex items-center gap-4">
@@ -407,7 +440,7 @@ export default function ExperienceView({ slug }: { slug: string }) {
                 </div>
             </header>
 
-            <main className="pt-24 sm:pt-32 pb-16 sm:pb-20 px-4 sm:px-6 max-w-7xl mx-auto">
+            <main className="pt-24 sm:pt-32 pb-16 sm:pb-20 px-4 sm:px-6 max-w-[1280px] mx-auto relative z-10">
                 {/* Hero Section */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -416,10 +449,10 @@ export default function ExperienceView({ slug }: { slug: string }) {
                     className="mb-12 sm:mb-16"
                 >
                     <div className="flex flex-col gap-4 sm:gap-6 mb-6 sm:mb-8">
-                        <h1 className="text-4xl sm:text-5xl lg:text-7xl font-light tracking-tight">
+                        <h1 className="text-4xl sm:text-5xl lg:text-7xl font-light tracking-tight text-[var(--text-main)]">
                             {experience.company}
                         </h1>
-                        <div className="flex flex-wrap gap-4 text-[var(--text-secondary)] text-sm sm:text-base">
+                        <div className="flex flex-wrap gap-4 text-[var(--text-muted)] text-sm sm:text-base">
                             <div className="flex items-center gap-2">
                                 <Building2 className="w-4 h-4" />
                                 <span>{experience.role}</span>

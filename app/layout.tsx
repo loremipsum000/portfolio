@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://dardanberisha.com'),
+  metadataBase: new URL('https://lorem-portfolio.com'),
   title: 'Dardan Berisha - Portfolio',
   description: 'Senior Product Designer & Multimedia Engineer based in Croatia. Specializing in Blockchain, Design Systems, and Brand Identity.',
   keywords: ['Product Design', 'UX/UI', 'Blockchain', 'Design Systems', 'Brand Identity', 'Frontend Development', 'Next.js', 'React', 'Multimedia Engineer', 'Croatia'],

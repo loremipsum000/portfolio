@@ -33,9 +33,9 @@ export const metadata: Metadata = {
     images: ['/media/linkpreview-lorem.jpg'],
   },
   icons: {
-    icon: '/favi-lorem.svg',
-    shortcut: '/favi-lorem.svg',
-    apple: '/favi-lorem.svg',
+    icon: '/media/favi-lorem.svg',
+    shortcut: '/media/favi-lorem.svg',
+    apple: '/media/favi-lorem.svg',
   },
 }
 

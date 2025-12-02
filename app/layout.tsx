@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://dardanberisha.com',
+    url: 'https://lorem-portfolio.com',
     title: 'Dardan Berisha - Portfolio',
     description: 'Senior Product Designer & Multimedia Engineer based in Croatia. Specializing in Blockchain, Design Systems, and Brand Identity.',
     siteName: 'Dardan Berisha Portfolio',

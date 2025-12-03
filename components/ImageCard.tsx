@@ -102,20 +102,24 @@ export default function ImageCard({
             </div>
             
             {/* Title and description below image (like latest project card) */}
-            <div className="p-4 sm:p-5 lg:p-6 relative z-10 flex flex-col gap-2 flex-shrink-0 bg-[var(--panel-bg)]">
-                <div className="flex items-start justify-between gap-2">
-                    <div className="flex-1">
-                        <h3 className="text-lg sm:text-xl lg:text-2xl font-mono font-semibold text-[var(--text-main)] group-hover:text-[rgb(var(--theme-rgb))] transition-colors mb-1">
-                            {title}
-                        </h3>
-                        {description && (
-                            <p className="text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed">
-                                {description}
-                            </p>
-                        )}
+            {(title || description) && (
+                <div className="p-4 sm:p-5 lg:p-6 relative z-10 flex flex-col gap-2 flex-shrink-0 bg-[var(--panel-bg)]">
+                    <div className="flex items-start justify-between gap-2">
+                        <div className="flex-1">
+                            {title && (
+                                <h3 className="text-lg sm:text-xl lg:text-2xl font-mono font-semibold text-[var(--text-main)] group-hover:text-[rgb(var(--theme-rgb))] transition-colors mb-1">
+                                    {title}
+                                </h3>
+                            )}
+                            {description && (
+                                <p className="text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed">
+                                    {description}
+                                </p>
+                            )}
+                        </div>
                     </div>
                 </div>
-            </div>
+            )}
         </motion.div>
     );
 }

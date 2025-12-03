@@ -279,12 +279,101 @@ const getSonicLabsImages = (): ExperienceData => {
     };
 };
 
+const getFantomFoundationImages = (): ExperienceData => {
+    const website = [
+        {
+            src: '/media/fantom-foundation/homepage-thumb.jpg',
+            alt: 'Fantom Homepage',
+            title: 'Homepage',
+            description: 'Main landing page for the Fantom Foundation',
+            embedUrl: 'https://embed.figma.com/proto/upcsVVc11ILysX2wI5WzFL/Untitled?page-id=38%3A1441&node-id=38-3222&p=f&viewport=126%2C166%2C0.04&scaling=scale-down&content-scaling=fixed&starting-point-node-id=38%3A3222&embed-host=share'
+        },
+        {
+            src: '/media/fantom-foundation/Building-thumb.jpg',
+            alt: 'Developers Section',
+            title: 'Developers',
+            description: 'Resources and tools for builders on Fantom',
+            embedUrl: 'https://embed.figma.com/proto/upcsVVc11ILysX2wI5WzFL/Untitled?page-id=38%3A1441&node-id=38-4176&p=f&viewport=126%2C166%2C0.04&scaling=scale-down&content-scaling=fixed&starting-point-node-id=38%3A4176&show-proto-sidebar=1&embed-host=share'
+        },
+        {
+            src: '/media/fantom-foundation/staking-thumb.jpg',
+            alt: 'Staking Interface',
+            title: 'Staking',
+            description: 'Staking overview and validator information',
+            embedUrl: 'https://embed.figma.com/proto/upcsVVc11ILysX2wI5WzFL/Untitled?page-id=38%3A1441&node-id=38-5519&p=f&viewport=126%2C166%2C0.04&scaling=scale-down&content-scaling=fixed&starting-point-node-id=38%3A5519&show-proto-sidebar=1&embed-host=share'
+        },
+        {
+            src: '/media/fantom-foundation/Intro-thumb.jpg',
+            alt: 'Intro Section',
+            title: 'Intro',
+            description: 'Introduction to the Fantom ecosystem',
+            embedUrl: 'https://embed.figma.com/proto/upcsVVc11ILysX2wI5WzFL/Untitled?page-id=38%3A1441&node-id=38-6285&p=f&viewport=126%2C166%2C0.04&scaling=scale-down&content-scaling=fixed&starting-point-node-id=38%3A6285&show-proto-sidebar=1&embed-host=share'
+        },
+        {
+            src: '/media/fantom-foundation/devtools-thumb.jpg',
+            alt: 'DevTools',
+            title: 'DevTools',
+            description: 'Developer tooling and documentation',
+            embedUrl: 'https://embed.figma.com/proto/upcsVVc11ILysX2wI5WzFL/Untitled?page-id=38%3A1441&node-id=38-7167&p=f&viewport=126%2C166%2C0.04&scaling=scale-down&content-scaling=fixed&starting-point-node-id=38%3A7167&show-proto-sidebar=1&embed-host=share'
+        },
+        {
+            src: '/media/fantom-foundation/environment-thumb.jpg',
+            alt: 'Environment',
+            title: 'Environment',
+            description: 'Eco-friendly blockchain initiatives',
+            embedUrl: 'https://embed.figma.com/proto/upcsVVc11ILysX2wI5WzFL/Untitled?page-id=38%3A1441&node-id=38-7899&p=f&viewport=126%2C166%2C0.04&scaling=scale-down&content-scaling=fixed&starting-point-node-id=38%3A7899&show-proto-sidebar=1&embed-host=share'
+        },
+        {
+            src: '/media/fantom-foundation/Validators-thumb.jpg',
+            alt: 'Validators',
+            title: 'Validators',
+            description: 'Network validator information and metrics',
+            embedUrl: 'https://embed.figma.com/proto/upcsVVc11ILysX2wI5WzFL/Untitled?page-id=38%3A1441&node-id=38-8326&p=f&viewport=126%2C166%2C0.04&scaling=scale-down&content-scaling=fixed&starting-point-node-id=38%3A8326&show-proto-sidebar=1&embed-host=share'
+        },
+        {
+            src: '/media/fantom-foundation/gamingthumb.jpg',
+            alt: 'Gaming',
+            title: 'Gaming',
+            description: 'Gaming ecosystem and partnerships',
+            embedUrl: 'https://embed.figma.com/proto/upcsVVc11ILysX2wI5WzFL/Untitled?page-id=39%3A4732&node-id=48-24363&viewport=612%2C361%2C0.11&scaling=scale-down&content-scaling=fixed&starting-point-node-id=48%3A24363&show-proto-sidebar=1&embed-host=share'
+        },
+        {
+            src: '/media/fantom-foundation/defithumb.jpg',
+            alt: 'DeFi',
+            title: 'DeFi',
+            description: 'Decentralized finance applications',
+            embedUrl: 'https://embed.figma.com/proto/upcsVVc11ILysX2wI5WzFL/Untitled?page-id=39%3A4732&node-id=48-24574&viewport=612%2C361%2C0.11&scaling=scale-down&content-scaling=fixed&starting-point-node-id=48%3A24574&show-proto-sidebar=1&embed-host=share'
+        },
+        {
+            src: '/media/fantom-foundation/nftthumb.jpg',
+            alt: 'NFTs',
+            title: 'NFTs',
+            description: 'NFT marketplace and collections',
+            embedUrl: 'https://embed.figma.com/proto/upcsVVc11ILysX2wI5WzFL/Untitled?page-id=39%3A4732&node-id=48-25099&viewport=612%2C361%2C0.11&scaling=scale-down&content-scaling=fixed&starting-point-node-id=48%3A25099&show-proto-sidebar=1&embed-host=share'
+        }
+    ];
+
+    const fWallet = Array.from({ length: 11 }, (_, i) => ({
+        src: `/media/fantom-foundation/fwallet/fwallet-${String(i + 1).padStart(2, '0')}.jpg`,
+        alt: `fWallet UX Audit ${i + 1}`,
+        title: '',
+        description: ''
+    }));
+
+    return {
+        website,
+        fWallet
+    };
+};
+
 // 2. Retrieve Data
 const getExperienceImages = (slug: string): ExperienceData | null => {
     switch (slug) {
         case 'sonic-labs':
             return getSonicLabsImages();
-        // TODO: Add cases for 'fantom-foundation', 'mueshi', etc.
+        case 'fantom-foundation':
+            return getFantomFoundationImages();
+        // TODO: Add cases for 'mueshi', etc.
         default:
             return null;
     }
@@ -365,6 +454,22 @@ const getExperienceFeatures = (slug: string): ExperienceFeature[] => {
                 }
             ];
         
+        case 'fantom-foundation':
+            return [
+                {
+                    title: 'Website Redesign',
+                    key: 'website',
+                    layout: 'pinterest',
+                    description: 'A complete overhaul of the Fantom Foundation website, focusing on clarity, developer resources, and ecosystem growth. The redesign aimed to modernize the visual identity while providing comprehensive information for all ecosystem participants.'
+                },
+                {
+                    title: 'fWallet UX Audit & Redesign',
+                    key: 'fWallet',
+                    layout: 'grid',
+                    description: 'The UX improvements focused on restaking functionality, which presented a significant user flow problem for managing delegations. The redesign resolved the issue of users being unable to manage their delegations by adding capital or adjusting the lock-up time. Additionally, the design enhances clarity across the wallet, featuring improved onboarding for new users, a clear swapping interface with success/failure responses, and better visual distinction in governance voting.'
+                }
+            ];
+
         default:
             return [];
     }

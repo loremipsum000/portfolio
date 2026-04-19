@@ -4,8 +4,8 @@ import './globals.css'
 export const metadata: Metadata = {
   metadataBase: new URL('https://lorem-portfolio.com'),
   title: 'Dardan Berisha - Portfolio',
-  description: 'Senior Product Designer & Multimedia Engineer based in Croatia. Specializing in Blockchain, Decentralized Apps, Design Systems, and Brand Identity.',
-  keywords: ['Product Design', 'UX/UI', 'Blockchain', 'Design Systems', 'Brand Identity', 'Frontend Development', 'Next.js', 'React', 'Multimedia Engineer', 'Croatia'],
+  description: 'Design Engineer based in Croatia. Experienced in Blockchain and a plethora of other industries — bridging design and code through Design Systems, Frontend Engineering, and Brand Identity.',
+  keywords: ['Design Engineer', 'Product Design', 'UX/UI', 'Design Systems', 'Frontend Engineering', 'Brand Identity', 'Blockchain', 'Next.js', 'React', 'Croatia'],
   authors: [{ name: 'Dardan Berisha' }],
   creator: 'Dardan Berisha',
   publisher: 'Dardan Berisha',
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: 'https://lorem-portfolio.com',
     title: 'Dardan Berisha - Portfolio',
-    description: 'Senior Product Designer & Multimedia Engineer based in Croatia. Specializing in Blockchain, Design Systems, and Brand Identity.',
+    description: 'Design Engineer based in Croatia. Experienced in Blockchain and a plethora of other industries — bridging design and code through Design Systems, Frontend Engineering, and Brand Identity.',
     siteName: 'Dardan Berisha Portfolio',
     images: [
       {
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Dardan Berisha - Portfolio',
-    description: 'Senior Product Designer & Multimedia Engineer based in Croatia.',
+    description: 'Design Engineer based in Croatia. Bridging design and code across Blockchain and a plethora of other industries.',
     creator: '@Lorem_Ipsum95',
     images: ['/media/linkpreview-lorem.jpg'],
   },

@@ -107,8 +107,8 @@ export default function Home() {
                                 Dardan <span className="text-[rgb(var(--theme-rgb))] transition-colors duration-500">Berisha</span>
                             </h1>
                             <p className="text-base sm:text-lg md:text-xl text-[var(--text-muted)] max-w-md font-light leading-relaxed">
-                                Senior Product Designer & Multimedia Engineer based in Croatia. 
-                                Specializing in <span className="text-[var(--text-main)] group-hover:text-[rgb(var(--theme-rgb))] font-medium transition-colors duration-500">Blockchain</span>, Design Systems, and Brand Identity.
+                                Design Engineer based in Croatia.
+                                Experienced in <span className="text-[var(--text-main)] group-hover:text-[rgb(var(--theme-rgb))] font-medium transition-colors duration-500">Blockchain</span> and a plethora of other industries — bridging design and code through Design Systems, Frontend Engineering, and Brand Identity.
                             </p>
                         </div>
                         

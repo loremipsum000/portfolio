@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, Calendar, Building2, Sun, Moon } from 'lucide-react';
+import { ArrowLeft, ArrowUpRight, Calendar, Building2, Sun, Moon } from 'lucide-react';
 import { EXPERIENCE, THEMES, THEME_RGB_VALUES } from '@/lib/constants';
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
@@ -9,6 +9,7 @@ import ImageCard from '@/components/ImageCard';
 import ImageModal from '@/components/ImageModal';
 import BrandGuidelinesCarousel from '@/components/BrandGuidelinesCarousel';
 import PinterestImageCard from '@/components/PinterestImageCard';
+import PorscheExperienceContent from '@/components/PorscheExperienceContent';
 
 // --- Type Definitions ---
 
@@ -492,6 +493,7 @@ export default function ExperienceView({ slug }: { slug: string }) {
     const images = getExperienceImages(slug);
     const theme = getExperienceTheme(slug);
     const features = getExperienceFeatures(slug);
+    const pageThemeRgb = slug === 'porsche-digital' ? THEME_RGB_VALUES[activeTheme] : theme.rgb;
 
     useEffect(() => {
         const savedThemeIndex = localStorage.getItem('activeTheme');
@@ -552,7 +554,7 @@ export default function ExperienceView({ slug }: { slug: string }) {
         <div 
             className={`min-h-screen font-sans selection:bg-[rgb(var(--theme-rgb))]/30 selection:text-[var(--text-main)] overflow-x-hidden transition-colors duration-500 relative`}
             style={{ 
-                "--theme-rgb": theme.rgb,
+                "--theme-rgb": pageThemeRgb,
                 "--bg-main": isDark ? '#09090b' : '#f4f4f5',
                 "--text-main": isDark ? '#e4e4e7' : '#18181b',
                 "--text-muted": isDark ? '#a1a1aa' : '#71717a',
@@ -620,10 +622,31 @@ export default function ExperienceView({ slug }: { slug: string }) {
                     <p className="text-lg sm:text-xl text-[var(--text-muted)] max-w-3xl leading-relaxed">
                         {experience.description}
                     </p>
+                    {slug === 'porsche-digital' && (
+                        <div className="mt-6 flex flex-wrap gap-3">
+                            {[
+                                { label: 'Porsche Design System v3', href: 'https://designsystem.porsche.com/v3/' },
+                                { label: 'Porsche Design System v4', href: 'https://designsystem.porsche.com/v4/' }
+                            ].map((link) => (
+                                <a
+                                    key={link.href}
+                                    href={link.href}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="group inline-flex items-center gap-2 rounded-full border border-[var(--border-color)] bg-[var(--panel-bg)] px-4 py-2 text-xs sm:text-sm text-[var(--text-main)] transition-all hover:border-[rgb(var(--theme-rgb))]/60 hover:text-[rgb(var(--theme-rgb))]"
+                                >
+                                    {link.label}
+                                    <ArrowUpRight className="h-3.5 w-3.5 text-[var(--text-muted)] transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[rgb(var(--theme-rgb))]" />
+                                </a>
+                            ))}
+                        </div>
+                    )}
                 </motion.div>
 
                 {/* Content Sections */}
-                {images ? (
+                {slug === 'porsche-digital' ? (
+                    <PorscheExperienceContent onOpenImage={(sectionImages, index) => openModal(sectionImages, index)} />
+                ) : images ? (
                     <div className="space-y-16 sm:space-y-32">
                         {features.map((feature, index) => {
                             const sectionImages = images[feature.key];

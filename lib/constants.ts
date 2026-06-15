@@ -36,9 +36,9 @@ export const EXPERIENCE = [
         role: "System Designer",
         company: "Porsche Digital Croatia",
         period: "2020—2021",
-        desc: "Design systems & components for Porsche products UI.",
+        desc: "Design systems, components, and iconography.",
         slug: "porsche-digital",
-        description: "Developed comprehensive design systems and component libraries for Porsche's digital products. Created scalable UI components, design tokens, and documentation that ensured consistency across all Porsche digital touchpoints."
+        description: "Managed design system work across component libraries, iconography, documentation, and implementation alignment for Porsche digital products. Focused on reusable Figma components, engineering handoff, accessibility, responsive behavior, and consistent adoption across product teams."
     },
     {
         role: "UX/UI Designer",
@@ -176,4 +176,3 @@ export const THEME_RGB_VALUES = [
     '16 185 129',  // Emerald
     '139 92 246',  // Violet
 ];
-

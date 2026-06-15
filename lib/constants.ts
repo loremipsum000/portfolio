@@ -28,9 +28,9 @@ export const EXPERIENCE = [
         role: "Founding Product Designer",
         company: "Helio",
         period: "2021—2022",
-        desc: "Micro-payments platform identity & UX.",
+        desc: "Initial brand, MVP, and crypto checkout UX.",
         slug: "helio",
-        description: "As founding product designer, established the visual identity and user experience for Helio, a micro-payments platform. Designed payment flows, dashboard interfaces, and brand identity from the ground up."
+        description: "As founding product designer, I helped build Helio's initial brand and MVP from the ground up in two months. The work covered checkout flows, merchant dashboard design, payment creation, wallet surfaces, and the early product language for crypto payments."
     },
     {
         role: "System Designer",

@@ -9,6 +9,7 @@ import ImageCard from '@/components/ImageCard';
 import ImageModal from '@/components/ImageModal';
 import BrandGuidelinesCarousel from '@/components/BrandGuidelinesCarousel';
 import PinterestImageCard from '@/components/PinterestImageCard';
+import HelioExperienceContent from '@/components/HelioExperienceContent';
 import PorscheExperienceContent from '@/components/PorscheExperienceContent';
 
 // --- Type Definitions ---
@@ -392,6 +393,11 @@ const getExperienceTheme = (slug: string) => {
                 rgb: '19, 181, 234', // Blue
                 hex: '#13b5ea'
             };
+        case 'helio':
+            return {
+                rgb: '249 115 22', // Orange
+                hex: '#f97316'
+            };
         case 'quantum-black':
             return {
                 rgb: '124, 58, 237', // Purple
@@ -493,7 +499,8 @@ export default function ExperienceView({ slug }: { slug: string }) {
     const images = getExperienceImages(slug);
     const theme = getExperienceTheme(slug);
     const features = getExperienceFeatures(slug);
-    const pageThemeRgb = slug === 'porsche-digital' ? THEME_RGB_VALUES[activeTheme] : theme.rgb;
+    const usesInterfaceTheme = slug === 'helio' || slug === 'porsche-digital';
+    const pageThemeRgb = usesInterfaceTheme ? THEME_RGB_VALUES[activeTheme] : theme.rgb;
 
     useEffect(() => {
         const savedThemeIndex = localStorage.getItem('activeTheme');
@@ -644,7 +651,9 @@ export default function ExperienceView({ slug }: { slug: string }) {
                 </motion.div>
 
                 {/* Content Sections */}
-                {slug === 'porsche-digital' ? (
+                {slug === 'helio' ? (
+                    <HelioExperienceContent onOpenImage={(sectionImages, index) => openModal(sectionImages, index)} />
+                ) : slug === 'porsche-digital' ? (
                     <PorscheExperienceContent onOpenImage={(sectionImages, index) => openModal(sectionImages, index)} />
                 ) : images ? (
                     <div className="space-y-16 sm:space-y-32">

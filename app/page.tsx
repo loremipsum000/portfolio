@@ -231,43 +231,68 @@ export default function Home() {
                         </div>
                     </motion.div>
 
-                    {/* 5.5. LATEST SIDE PROJECT (1/2 width on sm, 1 column on md) */}
-                    <motion.a 
-                        href="https://www.thecolorsynth.xyz/" 
-                        target="_blank"
-                        rel="noreferrer"
+                    {/* 5.5. LATEST SIDE PROJECTS (1/2 width on sm, 1 column on md) */}
+                    <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5, delay: 0.45 }}
-                        className="col-span-1 sm:col-span-1 md:col-span-1 lg:col-span-1 xl:col-span-2 lg:row-span-1 rounded-2xl sm:rounded-3xl overflow-hidden group bg-[var(--panel-bg)] backdrop-blur-md border border-[var(--border-color)] hover:border-[rgb(var(--theme-rgb))]/50 hover:bg-[rgb(var(--theme-rgb))]/5 transition-all duration-500 relative min-h-[200px] sm:min-h-[320px] lg:min-h-[280px] xl:min-h-[300px] flex flex-col"
+                        className="col-span-1 sm:col-span-1 md:col-span-1 lg:col-span-1 xl:col-span-2 lg:row-span-1 flex min-h-[340px] flex-col gap-3 rounded-2xl border border-[var(--border-color)] bg-[var(--panel-bg)] p-3 backdrop-blur-md transition-all duration-500 hover:border-[rgb(var(--theme-rgb))]/50 sm:min-h-[380px] sm:rounded-3xl lg:min-h-[300px] xl:min-h-[320px]"
                     >
-                        <div className="relative flex-1 overflow-hidden min-h-[120px] sm:min-h-[150px] lg:min-h-[180px]">
-                            <Image
-                                src="/media/Color-synth-3000-cover.jpg"
-                                alt="Color Synth 3000 - Color Palette Synthesizer"
-                                fill
-                                className="object-cover group-hover:scale-105 transition-transform duration-300"
-                                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 50vw"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-main)]/90 via-[var(--bg-main)]/50 to-transparent"></div>
-                        </div>
-                        <div className="p-4 sm:p-5 lg:p-6 relative z-10 flex flex-col gap-2 flex-shrink-0">
-                            <div className="flex items-start justify-between gap-2">
-                                <div className="flex-1">
-                                    <div className="flex items-center gap-2 mb-1">
-                                        <span className="font-mono text-xs text-[var(--text-muted)]">LATEST SIDE PROJECT</span>
-                                        <ArrowUpRight size={14} className="text-[var(--text-muted)] group-hover:text-[rgb(var(--theme-rgb))] group-hover:translate-x-1 group-hover:-translate-y-1 transition-all" />
+                        {[
+                            {
+                                href: 'https://clovetrade.framer.website/',
+                                src: '/media/clove-icon.jpg',
+                                alt: 'Clove trading app icon',
+                                label: 'LATEST SIDE PROJECT',
+                                title: 'Clove',
+                                description: 'Trading product concept and visual identity.',
+                                cardClassName: 'bg-[#1A1A1A]',
+                                imageClassName: 'object-contain'
+                            },
+                            {
+                                href: 'https://www.thecolorsynth.xyz/',
+                                src: '/media/Color-synth-3000-cover.jpg',
+                                alt: 'Color Synth 3000 - Color Palette Synthesizer',
+                                label: 'SIDE PROJECT',
+                                title: 'Color Synth 3000',
+                                description: 'Skeuomorphic color palette synthesiser.',
+                                cardClassName: 'bg-[var(--panel-bg)]',
+                                imageClassName: 'object-cover group-hover/project:scale-105'
+                            }
+                        ].map((project) => (
+                            <a
+                                key={project.title}
+                                href={project.href}
+                                target="_blank"
+                                rel="noreferrer"
+                                aria-label={`Open ${project.title}`}
+                                className={`group/project relative flex-1 overflow-hidden rounded-xl border border-[var(--border-color)] ${project.cardClassName} transition-all duration-500 hover:border-[rgb(var(--theme-rgb))]/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--theme-rgb))] sm:rounded-2xl`}
+                            >
+                                <Image
+                                    src={project.src}
+                                    alt={project.alt}
+                                    fill
+                                    className={`${project.imageClassName} transition-transform duration-500`}
+                                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                                />
+                                <div className="absolute inset-0 bg-black/0 backdrop-blur-0 transition-all duration-300 group-hover/project:bg-black/55 group-hover/project:backdrop-blur-sm group-focus-visible/project:bg-black/55 group-focus-visible/project:backdrop-blur-sm" />
+                                <div className="absolute inset-0 flex min-w-0 flex-col justify-end p-3 opacity-0 transition-opacity duration-300 group-hover/project:opacity-100 group-focus-visible/project:opacity-100 sm:p-4">
+                                    <div className="mb-1.5 flex min-w-0 items-center gap-2">
+                                        <span className="min-w-0 font-mono text-[9px] uppercase tracking-wider text-white/70 sm:text-[10px]">
+                                            {project.label}
+                                        </span>
+                                        <ArrowUpRight size={13} className="shrink-0 text-white/70 transition-transform group-hover/project:-translate-y-0.5 group-hover/project:translate-x-0.5" />
                                     </div>
-                                    <h3 className="text-lg sm:text-xl lg:text-2xl font-semibold text-[var(--text-main)] group-hover:text-[rgb(var(--theme-rgb))] transition-colors mb-1">
-                                        Color Synth 3000
+                                    <h3 className="text-base font-semibold leading-tight text-white sm:text-lg">
+                                        {project.title}
                                     </h3>
+                                    <p className="mt-1 text-[11px] leading-snug text-white/75 sm:text-xs">
+                                        {project.description}
+                                    </p>
                                 </div>
-                            </div>
-                            <p className="text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed">
-                                In homage to the great Dieter Rams - the iconic German industrial designer - I created this skeuomorphic color palette synthesiser.
-                            </p>
-                        </div>
-                    </motion.a>
+                            </a>
+                        ))}
+                    </motion.div>
 
                     {/* 6. VISUALIZER (1/2 width on sm, 1 column on md) */}
                     <motion.div 
@@ -394,4 +419,3 @@ export default function Home() {
         </div>
     );
 }
-

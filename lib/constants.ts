@@ -87,7 +87,7 @@ export const PERSONAL_INTERESTS = [
     {
         name: "Brazilian Jiu-jitsu",
         icon: "Activity",
-        description: "Started 2 years ago, working on my blue belt."
+        description: "Training for 4 years, working on my purple belt."
     },
     {
         name: "Soccer",

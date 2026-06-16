@@ -375,7 +375,6 @@ const getExperienceImages = (slug: string): ExperienceData | null => {
             return getSonicLabsImages();
         case 'fantom-foundation':
             return getFantomFoundationImages();
-        // TODO: Add cases for 'mueshi', etc.
         default:
             return null;
     }

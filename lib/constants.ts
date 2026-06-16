@@ -17,14 +17,6 @@ export const EXPERIENCE = [
         description: "Led product design efforts for fWallet, Fantom's flagship wallet application. Created comprehensive ecosystem branding that unified multiple projects under a cohesive visual language while maintaining individual project identities."
     },
     {
-        role: "Product Designer",
-        company: "Mueshi Inc.",
-        period: "2022—2023",
-        desc: "Web3 NFT marketplace identity & UX.",
-        slug: "mueshi",
-        description: "Designed the complete identity and user experience for Mueshi, a Web3 NFT marketplace. Focused on creating intuitive interfaces for NFT trading, collections management, and marketplace discovery."
-    },
-    {
         role: "Founding Product Designer",
         company: "Helio",
         period: "2021—2022",

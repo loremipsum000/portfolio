@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { Fragment, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { 
     ArrowUpRight, 
@@ -207,26 +207,30 @@ export default function Home() {
                         </div>
 
                         {/* Scrollable Container */}
-                        <div className="flex-1 overflow-y-auto custom-scrollbar pr-2 space-y-6">
+                        <div className="flex-1 overflow-y-auto custom-scrollbar pr-2">
                             {EXPERIENCE.map((job, index) => (
-                                <Link 
-                                    key={index} 
-                                    href={`/experience/${job.slug}`}
-                                    className="group/item flex flex-col sm:flex-row sm:items-baseline md:flex-row md:items-baseline justify-between gap-1 sm:gap-2 md:gap-4 border-b border-[var(--border-color)] pb-3 last:border-0 last:pb-0 hover:bg-[rgb(var(--theme-rgb))]/10 p-2 -mx-2 rounded-lg transition-colors cursor-pointer"
-                                >
-                                    <div className="flex-1">
-                                        <div className="flex items-center gap-2">
-                                            <span className="font-medium text-[var(--text-main)] group-hover/item:text-[rgb(var(--theme-rgb))] transition-colors">{job.role}</span>
-                                            <span className="text-[var(--text-muted)] text-sm hidden md:inline">at</span>
-                                            <span className="text-[var(--text-muted)] text-sm hidden md:inline group-hover/item:text-[var(--text-main)] transition-colors">{job.company}</span>
+                                <Fragment key={job.slug}>
+                                    <Link
+                                        href={`/experience/${job.slug}`}
+                                        className="group/item flex flex-col sm:flex-row sm:items-baseline md:flex-row md:items-baseline justify-between gap-1 sm:gap-2 md:gap-4 py-3 transition-colors cursor-pointer"
+                                    >
+                                        <div className="flex-1">
+                                            <div className="flex items-center gap-2">
+                                                <span className="font-medium text-[var(--text-main)] group-hover/item:text-[rgb(var(--theme-rgb))] transition-colors">{job.role}</span>
+                                                <span className="text-[var(--text-muted)] text-sm hidden md:inline">at</span>
+                                                <span className="text-[var(--text-muted)] text-sm hidden md:inline group-hover/item:text-[var(--text-main)] transition-colors">{job.company}</span>
+                                            </div>
+                                            <div className="text-xs text-[var(--text-muted)] mt-1 md:hidden">{job.company}</div>
+                                            <div className="text-xs text-[var(--text-muted)] mt-1 max-w-md line-clamp-1">{job.desc}</div>
                                         </div>
-                                        <div className="text-xs text-[var(--text-muted)] mt-1 md:hidden">{job.company}</div>
-                                        <div className="text-xs text-[var(--text-muted)] mt-1 max-w-md line-clamp-1">{job.desc}</div>
-                                    </div>
-                                    <div className="font-mono text-xs text-[var(--text-muted)] whitespace-nowrap bg-[var(--bg-main)]/50 px-2 py-1 rounded">
-                                        {job.period}
-                                    </div>
-                                </Link>
+                                        <div className="font-mono text-xs text-[var(--text-muted)] whitespace-nowrap bg-[var(--bg-main)]/50 px-2 py-1 rounded">
+                                            {job.period}
+                                        </div>
+                                    </Link>
+                                    {index < EXPERIENCE.length - 1 && (
+                                        <div className="h-px w-full bg-[var(--border-color)]" aria-hidden="true" />
+                                    )}
+                                </Fragment>
                             ))}
                         </div>
                     </motion.div>

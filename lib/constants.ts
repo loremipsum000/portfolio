@@ -1,6 +1,6 @@
 export const EXPERIENCE = [
     {
-        role: "Lead Designer",
+        role: "Frontend/Design Engineer",
         company: "Sonic Labs",
         period: "2024—Present",
         desc: "Leading rebrand of the entire chain & sub-brands.",
@@ -9,7 +9,7 @@ export const EXPERIENCE = [
         logo: "/media/sonic-labs/sonic-pfp.jpg"
     },
     {
-        role: "Lead Designer",
+        role: "Frontend Engineer",
         company: "Fantom Foundation",
         period: "2022—2024",
         desc: "Product design for fWallet & ecosystem branding.",
@@ -17,7 +17,7 @@ export const EXPERIENCE = [
         description: "Led product design efforts for fWallet, Fantom's flagship wallet application. Created comprehensive ecosystem branding that unified multiple projects under a cohesive visual language while maintaining individual project identities."
     },
     {
-        role: "Founding Product Designer",
+        role: "Founding Designer Engineer",
         company: "Helio",
         period: "2021—2022",
         desc: "Initial brand, MVP, and crypto checkout UX.",
@@ -25,7 +25,7 @@ export const EXPERIENCE = [
         description: "As founding product designer, I helped build Helio's initial brand and MVP from the ground up in two months. The work covered checkout flows, merchant dashboard design, payment creation, wallet surfaces, and the early product language for crypto payments."
     },
     {
-        role: "System Designer",
+        role: "Design System Engineer",
         company: "Porsche Digital Croatia",
         period: "2020—2021",
         desc: "Design systems, components, and iconography.",
